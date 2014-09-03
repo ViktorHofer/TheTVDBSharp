@@ -1,8 +1,6 @@
 TVDBSharp
 =========
 
-Now also available as a NuGet package at https://www.nuget.org/packages/TVDBSharp/
-
 **A C# wrapper for the TVDB API.**
 
 This API provides an easy-to-use interface to the TVDB API by translating the XML responses into objects. 
@@ -23,36 +21,22 @@ You don't have to do this, but some people might want to read up on the, althoug
 
 **3) Import the library.**  
 This can be done by either forking this repository and compiling it yourself 
-or by downloading the latest version from the link below.
-
-> https://mega.co.nz/#!ldV2mByK!ThyK-hbqHXWGnLcKbjtrcxQv46rF_V6tghtE9ZWELEU
-
+or by downloading the latest version from GitHub
 
 Add it as a reference to your project and you're all set.
 
 **4) Use it!**  
 You can now use TVDBSharp in your own project.
-Look trough the examples project if you aren't entirely sure how to get started.
 
 A simple example:
 
-    var tvdb = new TVDB("mykey"); // Create a new TVDB object with your API key.
-    var results = tvdb.Search("Battlestar Galactica", 3); // Search for a show and take the top-3.
+    var tvdb = new TVDBManager("mykey"); // Create a new TVDB object with your API key.
+    var results = tvdb.SearchSeries("Scrubs", Language.English); // Search for a show called scrubs with english as language
     
     foreach(var show in results){
-     Console.WriteLine("{0}:\t{1}", show.Name, show.ID); // Print every show's name and ID.
+     Console.WriteLine("{0}:\t{1} Episodes", show.Title, show.Episodes.Count); // Print every show's name and amount of episodes
     }
-    
-Output:
-> Battlestar Galactica:     71173  
-> Battlestar Galactica: Blood & Chrome:     204781  
-> Battlestar Galactica \<2003\> :     73545  
 
 **Notes**  
 If you encounter any issues or have a suggestion: don't hesitate to open a ticket.  
-Should you wish to do so, you can contact me at `jer_vannevel<at>hotmail.com`.
-
-Other networking sites:  
-[StackOverflow] (http://stackoverflow.com/users/1864167/jeroen-vannevel)  
-[Careers 2.0] (http://careers.stackoverflow.com/Vannevelj)  
-[LinkedIn](http://www.linkedin.com/profile/view?id=289197145&trk=nav_responsive_tab_profile)  
+Should you wish to do so, you can contact me at `viktor.hofer@outlook.com`.
