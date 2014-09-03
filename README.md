@@ -22,10 +22,7 @@ You don't have to do this, but some people might want to read up on the, althoug
 > http://www.thetvdb.com/wiki/index.php?title=Programmers_API
 
 **3) Import the library.**  
-This can be done by either forking this repository and compiling it yourself 
-or by downloading the latest version from GitHub
-
-Add it as a reference to your project and you're all set.
+Easiest way is to add nuget package via Nuget Package Manager in Visual Studio. Link at the top.
 
 **4) Use it!**  
 You can now use TVDBSharp in your own project.
