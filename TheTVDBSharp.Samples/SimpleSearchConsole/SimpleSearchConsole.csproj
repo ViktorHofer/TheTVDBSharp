@@ -53,6 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalConfiguration.cs" />
+    <Compile Include="GlobalConfigurationLocal.cs">
+      <SubType>
+      </SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
