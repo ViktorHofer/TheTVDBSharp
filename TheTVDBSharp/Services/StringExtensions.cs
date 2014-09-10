@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TheTVDBSharp.Services
 {
-    public static class StringExtension
+    public static class StringExtensions
     {
         public static IReadOnlyCollection<string> SplitByPipe(this string raw)
         {

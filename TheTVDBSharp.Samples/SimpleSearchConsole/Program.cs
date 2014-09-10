@@ -12,7 +12,7 @@ namespace SimpleSearchConsole
             // to create a unique exception for that case. TheTVDB triggers 404 also in many other cases.
             // So you get an aggregate exception with a more understandable INNER Exception (404).
 
-            var tvdb = new TheTVDBManager("1111");
+            var tvdb = new TheTVDBManager("1111");  // <--- API KEY required
 
             while (true)
             {

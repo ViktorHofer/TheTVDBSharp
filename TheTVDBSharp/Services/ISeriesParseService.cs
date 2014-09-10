@@ -12,7 +12,7 @@ namespace TheTVDBSharp.Services
 
         Series Parse(XElement seriesXml);
 
-        Task<Series> ParseFull(Stream fullSeriesCompressedStream, Language language);
+        Task<Series> ParseFull(Stream fullSeriesStream, Language language);
 
         IReadOnlyCollection<Series> ParseSearch(string seriesCollectionRaw);
     }

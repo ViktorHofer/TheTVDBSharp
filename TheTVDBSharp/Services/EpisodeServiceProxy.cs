@@ -7,7 +7,7 @@ namespace TheTVDBSharp.Services
 {
     public class EpisodeServiceProxy : ProxyBase, IEpisodeService
     {
-        private const string episodeUrlFormat = "{0}/{1}/episodes/{2}/{3}.xml";
+        private const string episodeUrlFormat = "{0}/api/{1}/episodes/{2}/{3}.xml";
 
         public EpisodeServiceProxy(IProxyConfiguration config)
             : base(config)

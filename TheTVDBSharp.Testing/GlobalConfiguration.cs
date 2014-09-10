@@ -2,9 +2,17 @@
 
 namespace TheTVDBSharp.Testing
 {
-    public static class GlobalConfiguration
+    public static partial class GlobalConfiguration
     {
-        public static readonly IProxyConfiguration ApiConfiguration = 
-            new ProxyConfiguration("API_KEY", "http://thetvdb.com/api");
+        public static readonly string API_KEY = "";
+        public static readonly string BASE_URL = "http://thetvdb.com";
+
+        public static ProxyConfiguration ApiConfiguration
+        {
+            get
+            {
+                return new ProxyConfiguration(API_KEY, BASE_URL);
+            }
+        }
     }
 }

@@ -8,35 +8,16 @@ namespace TheTVDBSharp.Models
 
         public uint Id
         {
-            get
-            {
-                return this.id;
-            }
+            get { return this.id; }
         }
 
-        public string RemotePath
-        {
-            get;
-            set;
-        }
+        public string RemotePath { get; set; }
 
-        public Language? Language
-        {
-            get;
-            set;
-        }
+        public Language? Language { get; set; }
 
-        public double? Rating
-        {
-            get;
-            set;
-        }
+        public double? Rating { get; set; }
 
-        public int? RatingCount
-        {
-            get;
-            set;
-        }
+        public int? RatingCount { get; set; }
 
         public BannerBase(uint id)
         {

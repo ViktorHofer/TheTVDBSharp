@@ -66,14 +66,19 @@
   </Choose>
   <ItemGroup>
     <Compile Include="GlobalConfiguration.cs" />
+    <Compile Include="GlobalConfigurationLocal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ActorParseServiceTest.cs" />
     <Compile Include="Services\BannerParseServiceTest.cs" />
+    <Compile Include="Services\BannerServiceProxyTest.cs" />
     <Compile Include="Services\EpisodeServiceProxyTest.cs" />
     <Compile Include="Services\SeriesParseServiceTest.cs" />
     <Compile Include="Services\SeriesServiceProxyTest.cs" />
     <Compile Include="SampleDataHelper.cs" />
     <Compile Include="Services\EpisodeParseServiceTest.cs" />
+    <Compile Include="Services\UpdateParseServiceTest.cs" />
+    <Compile Include="Services\UpdateServiceProxyTest.cs" />
+    <Compile Include="TheTVDBManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TheTVDBSharp\TheTVDBSharp.csproj">
@@ -105,6 +110,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="SampleData\SeriesFull_76156.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleData\Updates_Day.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

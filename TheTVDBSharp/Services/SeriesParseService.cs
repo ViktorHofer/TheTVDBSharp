@@ -85,9 +85,9 @@ namespace TheTVDBSharp.Services
 
             using (ZipArchive archive = new ZipArchive(fullSeriesCompressedStream, ZipArchiveMode.Read))
             {
-                seriesRaw = ReadToEnd(archive.GetEntry(language.ToShort() + ".xml"));
-                actorsRaw = ReadToEnd(archive.GetEntry("actors.xml"));
-                bannersRaw = ReadToEnd(archive.GetEntry("banners.xml"));
+                seriesRaw = archive.GetEntry(language.ToShort() + ".xml").ReadToEnd();
+                actorsRaw = archive.GetEntry("actors.xml").ReadToEnd();
+                bannersRaw = archive.GetEntry("banners.xml").ReadToEnd();
             }
 
             var seriesTask = Task.Run(() =>
@@ -127,15 +127,6 @@ namespace TheTVDBSharp.Services
             }
 
             return seriesList;
-        }
-
-        private string ReadToEnd(ZipArchiveEntry entry)
-        {
-            using (var stream = entry.Open())
-            using (var reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
         }
     }
 }

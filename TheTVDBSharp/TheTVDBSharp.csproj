@@ -36,14 +36,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Models\BannerUpdate.cs" />
     <Compile Include="Models\Color.cs" />
+    <Compile Include="Models\EpisodeUpdate.cs" />
+    <Compile Include="Models\SeriesUpdate.cs" />
+    <Compile Include="Models\UpdateContainer.cs" />
     <Compile Include="Services\ActorParseService.cs" />
     <Compile Include="Services\BannerParseService.cs" />
+    <Compile Include="Services\BannerServiceProxy.cs" />
     <Compile Include="Services\EpisodeParseService.cs" />
     <Compile Include="Services\IActorParseService.cs" />
     <Compile Include="Services\IBannerParseService.cs" />
+    <Compile Include="Services\IBannerService.cs" />
     <Compile Include="Services\IEpisodeParseService.cs" />
     <Compile Include="Services\ISeriesParseService.cs" />
+    <Compile Include="Services\IUpdateParseService.cs" />
+    <Compile Include="Services\IUpdateService.cs" />
     <Compile Include="Services\ProxyBase.cs" />
     <Compile Include="Services\ProxyConfiguration.cs" />
     <Compile Include="Services\IProxyConfiguration.cs" />
@@ -51,15 +59,14 @@
     <Compile Include="Models\Frequency.cs" />
     <Compile Include="Models\Interval.cs" />
     <Compile Include="Models\Language.cs" />
-    <Compile Include="Models\SeriesBannerType.cs" />
     <Compile Include="Models\Status.cs" />
-    <Compile Include="Models\ContentRatingExtension.cs" />
-    <Compile Include="Models\IntervalExtension.cs" />
-    <Compile Include="Models\LanguageExtension.cs" />
     <Compile Include="Services\DateTimeExtension.cs" />
     <Compile Include="Services\SeriesParseService.cs" />
+    <Compile Include="Services\StreamExtensions.cs" />
+    <Compile Include="Services\UpdateParseService.cs" />
+    <Compile Include="Services\UpdateServiceProxy.cs" />
     <Compile Include="Services\XElementExtension.cs" />
-    <Compile Include="Services\StringExtension.cs" />
+    <Compile Include="Services\StringExtensions.cs" />
     <Compile Include="ITheTVDBManager.cs" />
     <Compile Include="Models\Actor.cs" />
     <Compile Include="Models\BannerBase.cs" />

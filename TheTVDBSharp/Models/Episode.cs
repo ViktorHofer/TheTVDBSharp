@@ -15,155 +15,88 @@ namespace TheTVDBSharp.Models
         /// </summary>
         public uint Id
         {
-            get
-            {
-                return this.id;
-            }
+            get { return this.id; }
         }
 
         /// <summary>
         ///     This episode's season id.
         /// </summary>
-        public uint? SeasonId
-        {
-            get;
-            set;
-        }
+        public uint? SeasonId { get; set; }
 
         /// <summary>
         ///     This episode's season number.
         /// </summary>
-        public uint? SeasonNumber
-        {
-            get;
-            set;
-        }
+        public uint? SeasonNumber { get; set; }
 
         /// <summary>
         ///     This episode's number in the appropriate season.
         /// </summary>
-        public int Number
-        {
-            get;
-            set;
-        }
+        public int Number { get; set; }
 
         /// <summary>
         ///     Main language spoken in the episode.
         /// </summary>
-        public Language? Language
-        {
-            get;
-            set;
-        }
+        public Language? Language { get; set; }
 
         /// <summary>
         ///     This episode's title.
         /// </summary>
-        public string Title
-        {
-            get;
-            set;
-        }
+        public string Title { get; set; }
 
         /// <summary>
         ///     A short description of the episode.
         /// </summary>
-        public string Description
-        {
-            get;
-            set;
-        }
+        public string Description { get; set; }
 
         /// <summary>
         ///     Path of the episode thumbnail
         /// </summary>
-        public string ThumbRemotePath
-        {
-            get;
-            set;
-        }
+        public string ThumbRemotePath { get; set; }
 
         /// <summary>
         ///     Director of the episode.
         /// </summary>
-        public IReadOnlyCollection<string> Directors
-        {
-            get;
-            set;
-        }
+        public IReadOnlyCollection<string> Directors { get; set; }
 
         /// <summary>
         ///     Writers(s) of the episode.
         /// </summary>
-        public IReadOnlyCollection<string> Writers
-        {
-            get;
-            set;
-        }
+        public IReadOnlyCollection<string> Writers { get; set; }
 
         /// <summary>
         ///     A list of guest stars.
         /// </summary>
-        public IReadOnlyCollection<string> GuestStars
-        {
-            get;
-            set;
-        }
+        public IReadOnlyCollection<string> GuestStars { get; set; }
 
         /// <summary>
         ///     The date of the first time this episode has aired.
         /// </summary>
-        public DateTime? FirstAired
-        {
-            get;
-            set;
-        }
+        public DateTime? FirstAired { get; set; }
 
         /// <summary>
         ///     Average rating as shown on IMDb.
         /// </summary>
-        public double? Rating
-        {
-            get;
-            set;
-        }
+        public double? Rating { get; set; }
 
         /// <summary>
         ///     Amount of votes cast.
         /// </summary>
-        public int? RatingCount
-        {
-            get;
-            set;
-        }
+        public int? RatingCount { get; set; }
 
         /// <summary>
         ///     Timestamp of the last update to this episode.
         /// </summary>
-        public DateTime? LastUpdated
-        {
-            get;
-            set;
-        }
+        public DateTime? LastUpdated { get; set; }
 
         /// <summary>
         ///     Width dimension of the thumbnail in pixels;
         /// </summary>
-        public int? ThumbWidth
-        {
-            get;
-            set;
-        }
+        public int? ThumbWidth { get; set; }
 
         /// <summary>
         ///     Height dimension of the thumbnail in pixels.
         /// </summary>
-        public int? ThumbHeight
-        {
-            get;
-            set;
-        }
+        public int? ThumbHeight { get; set; }
 
         public Episode(uint id)
         {

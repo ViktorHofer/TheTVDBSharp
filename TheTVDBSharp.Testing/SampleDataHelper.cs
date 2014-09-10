@@ -13,7 +13,8 @@ namespace TheTVDBSharp.Testing
             SeriesFull_76156,
             SeriesFull_76156_Meta,
             SeriesFull_76156_Banners,
-            SeriesFull_76156_Actors
+            SeriesFull_76156_Actors,
+            Updates_Day
         }
 
         internal static string Open(SampleData sampleData)

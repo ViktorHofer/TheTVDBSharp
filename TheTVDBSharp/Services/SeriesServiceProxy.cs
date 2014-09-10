@@ -8,9 +8,9 @@ namespace TheTVDBSharp.Services
 {
     public class SeriesServiceProxy : ProxyBase, ISeriesService
     {
-        private const string fullSeriesUrlFormat = "{0}/{1}/series/{2}/all/{3}.zip";
-        private const string seriesUrlFormat = "{0}/{1}/series/{2}/all/{3}.xml";
-        private const string searchSeriesUrlFormat = "{0}/GetSeries.php?seriesname={1}&language={2}";
+        private const string fullSeriesUrlFormat = "{0}/api/{1}/series/{2}/all/{3}.zip";
+        private const string seriesUrlFormat = "{0}/api/{1}/series/{2}/all/{3}.xml";
+        private const string searchSeriesUrlFormat = "{0}/api/GetSeries.php?seriesname={1}&language={2}";
 
         public SeriesServiceProxy(IProxyConfiguration config)
             : base(config)
@@ -23,7 +23,8 @@ namespace TheTVDBSharp.Services
 
             using (var client = new HttpClient())
             {
-                return await client.GetStreamAsync(url);
+                var message = await client.GetAsync(url, HttpCompletionOption.ResponseContentRead);
+                return await message.Content.ReadAsStreamAsync();
             }
         }
 

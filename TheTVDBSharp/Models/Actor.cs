@@ -8,35 +8,16 @@ namespace TheTVDBSharp.Models
 
         public uint Id
         {
-            get
-            {
-                return this.id;
-            }
+            get { return this.id; }
         }
 
-        public string ImageRemotePath
-        {
-            get;
-            set;
-        }
+        public string ImageRemotePath { get; set; }
 
-        public string Name
-        {
-            get;
-            set;
-        }
+        public string Name { get; set; }
 
-        public string Role
-        {
-            get;
-            set;
-        }
+        public string Role { get; set; }
 
-        public int SortOrder
-        {
-            get;
-            set;
-        }
+        public int SortOrder { get; set; }
 
         public Actor(uint id)
         {
