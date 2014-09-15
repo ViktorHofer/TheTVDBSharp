@@ -8,12 +8,12 @@ namespace TheTVDBSharp.Services
 {
     public class BannerParseService : IBannerParseService
     {
-        public IReadOnlyCollection<BannerBase> Parse(string bannerCollectionRaw)
+        public IReadOnlyCollection<Banner> Parse(string bannerCollectionRaw)
         {
             var doc = XDocument.Parse(bannerCollectionRaw);
             var bannersXml = doc.Element("Banners");
 
-            var bannerList = new List<BannerBase>();
+            var bannerList = new List<Banner>();
             foreach (var bannerXml in bannersXml.Elements("Banner"))
             {
                 var banner = Parse(bannerXml);
@@ -23,9 +23,9 @@ namespace TheTVDBSharp.Services
             return bannerList;
         }
 
-        public BannerBase Parse(XElement bannerXml)
+        public Banner Parse(XElement bannerXml)
         {
-            BannerBase banner = null;
+            Banner banner = null;
 
             var id = bannerXml.ElementAsUInt("id");
             if (!id.HasValue) return null;
@@ -55,7 +55,7 @@ namespace TheTVDBSharp.Services
             return banner;
         }
 
-        private BannerBase CreateFanart(XElement bannerXml, uint id)
+        private Banner CreateFanart(XElement bannerXml, uint id)
         {
             var banner = new FanartBanner(id);
 
@@ -82,7 +82,7 @@ namespace TheTVDBSharp.Services
             return banner;
         }
 
-        private BannerBase CreatePoster(XElement bannerXml, uint id)
+        private Banner CreatePoster(XElement bannerXml, uint id)
         {
             var banner = new PosterBanner(id);
 
@@ -96,7 +96,7 @@ namespace TheTVDBSharp.Services
             return banner;
         }
 
-        private BannerBase CreateSeason(XElement bannerXml, uint id)
+        private Banner CreateSeason(XElement bannerXml, uint id)
         {
             return new SeasonBanner(id)
             {
@@ -105,7 +105,7 @@ namespace TheTVDBSharp.Services
             };
         }
 
-        private BannerBase CreateSeries(XElement bannerXml, uint id)
+        private Banner CreateSeries(XElement bannerXml, uint id)
         {
             return new SeriesBanner(id)
             {

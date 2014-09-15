@@ -7,8 +7,8 @@ namespace TheTVDBSharp.Services
 {
     public interface IBannerParseService
     {
-        IReadOnlyCollection<BannerBase> Parse(string bannerCollectionRaw);
+        IReadOnlyCollection<Banner> Parse(string bannerCollectionRaw);
 
-        BannerBase Parse(XElement bannerXml);
+        Banner Parse(XElement bannerXml);
     }
 }

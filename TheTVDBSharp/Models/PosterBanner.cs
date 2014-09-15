@@ -1,7 +1,7 @@
 ﻿
 namespace TheTVDBSharp.Models
 {
-    public sealed class PosterBanner : BannerBase
+    public sealed class PosterBanner : Banner
     {
         public int? Width { get; set; }
 

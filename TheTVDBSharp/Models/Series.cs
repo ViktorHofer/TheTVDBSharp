@@ -123,7 +123,7 @@ namespace TheTVDBSharp.Models
         /// </summary>
         public IReadOnlyCollection<Episode> Episodes { get; set; }
 
-        public IReadOnlyCollection<BannerBase> Banners { get; set; }
+        public IReadOnlyCollection<Banner> Banners { get; set; }
 
         public Series(uint id)
         {

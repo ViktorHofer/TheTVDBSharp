@@ -8,7 +8,7 @@ namespace TheTVDBSharp.Models
         Blank
     }
 
-    public sealed class SeriesBanner : BannerBase
+    public sealed class SeriesBanner : Banner
     {
         public SeriesBannerType? BannerType { get; set; }
 

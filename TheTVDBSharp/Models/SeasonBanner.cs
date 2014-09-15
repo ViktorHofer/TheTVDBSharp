@@ -1,7 +1,7 @@
 ﻿
 namespace TheTVDBSharp.Models
 {
-    public sealed class SeasonBanner : BannerBase
+    public sealed class SeasonBanner : Banner
     {
         public int? Season { get; set; }
 

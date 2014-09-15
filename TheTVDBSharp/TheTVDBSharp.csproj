@@ -69,7 +69,7 @@
     <Compile Include="Services\StringExtensions.cs" />
     <Compile Include="ITheTVDBManager.cs" />
     <Compile Include="Models\Actor.cs" />
-    <Compile Include="Models\BannerBase.cs" />
+    <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\Episode.cs" />
     <Compile Include="Models\FanartBanner.cs" />
     <Compile Include="Models\PosterBanner.cs" />

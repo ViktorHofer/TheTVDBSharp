@@ -2,7 +2,7 @@
 
 namespace TheTVDBSharp.Models
 {
-    public sealed class FanartBanner : BannerBase
+    public sealed class FanartBanner : Banner
     {
         public int? Width { get; set; }
 

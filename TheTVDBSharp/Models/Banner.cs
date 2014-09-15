@@ -2,7 +2,7 @@
 
 namespace TheTVDBSharp.Models
 {
-    public class BannerBase : IEquatable<BannerBase>
+    public class Banner : IEquatable<Banner>
     {
         private readonly uint id;
 
@@ -19,19 +19,19 @@ namespace TheTVDBSharp.Models
 
         public int? RatingCount { get; set; }
 
-        public BannerBase(uint id)
+        public Banner(uint id)
         {
             this.id = id;
         }
 
-        public bool Equals(BannerBase other)
+        public bool Equals(Banner other)
         {
             return other != null && other.id == this.id;
         }
 
         public override bool Equals(object obj)
         {
-            return this.Equals(obj as BannerBase);
+            return this.Equals(obj as Banner);
         }
 
         public override int GetHashCode()
