@@ -2,7 +2,7 @@
 
 namespace TheTVDBSharp.Models
 {
-    public abstract class BannerBase : IEquatable<BannerBase>
+    public class BannerBase : IEquatable<BannerBase>
     {
         private readonly uint id;
 

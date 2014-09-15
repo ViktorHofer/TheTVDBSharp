@@ -57,23 +57,23 @@ namespace TheTVDBSharp
         }
 
         /// <summary>
-        ///     Get a specific series based on its ID and if compression mode is true also all banners and actors.
+        ///     Get a specific series based on its Id and if compression mode is true also all banners and actors.
         /// </summary>
-        /// <param name="showId">ID of the series.</param>
+        /// <param name="seriesId">Id of the series.</param>
         /// <param name="language">Language of the series.</param>
         /// <param name="compression">Set compression mode to false if you want to have an uncompressed transmission 
         /// which increases the bandwith load a lot. Compressed transmission also loads all banners and actors.</param>
         /// <returns>Returns the corresponding show.</returns>
-        public async Task<Series> GetSeries(uint showId, Language language, bool compression = true)
+        public async Task<Series> GetSeries(uint seriesId, Language language, bool compression = true)
         {
             if (compression)
             {
-                var fullSeriesStream = await this.seriesService.RetrieveFull(showId, language);
+                var fullSeriesStream = await this.seriesService.RetrieveFull(seriesId, language);
                 return await this.seriesParseService.ParseFull(fullSeriesStream, language);
             }
             else
             {
-                var seriesRaw = await this.seriesService.Retrieve(showId, language);
+                var seriesRaw = await this.seriesService.Retrieve(seriesId, language);
                 return this.seriesParseService.Parse(seriesRaw);
             }
         }
