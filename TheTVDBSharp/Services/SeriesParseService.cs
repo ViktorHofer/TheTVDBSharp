@@ -1,10 +1,11 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using TheTVDBSharp.Models;
+
 namespace TheTVDBSharp.Services
 {
     public class SeriesParseService : ISeriesParseService
@@ -22,11 +23,29 @@ namespace TheTVDBSharp.Services
             this.episodeParseService = episodeParseService;
         }
 
+        /// <summary>
+        /// Parse series xml document and returns null if xml is not valid
+        /// </summary>
+        /// <param name="seriesRaw">Series xml document</param>
+        /// <returns>Returns the parsed series or null if xml is not valid</returns>
         public Series Parse(string seriesRaw)
         {
-            var seriesDoc = XDocument.Parse(seriesRaw);
+            if (seriesRaw == null)
+            {
+                throw new ArgumentNullException("seriesRaw", "Series XML string cannot be null");
+            }
+
+            // If xml cannot be created return null
+            var seriesDoc = seriesRaw.ToXDocument();
+            if (seriesDoc == null) return null;
+
+            // If Data element is missing return null
             var seriesXml = seriesDoc.Element("Data");
+            if (seriesXml == null) return null;
+
+            // If Series element is missing return null
             var seriesMetaXml = seriesXml.Element("Series");
+            if (seriesMetaXml == null) return null;
 
             // Parsing series metadata
             var series = Parse(seriesMetaXml);
@@ -38,21 +57,32 @@ namespace TheTVDBSharp.Services
             List<Episode> episodeList = new List<Episode>();
             foreach (var episodeXml in seriesXml.Elements("Episode"))
             {
+                // If episode could not be parsed skip it and continue
                 var episode = this.episodeParseService.Parse(episodeXml);
-                episodeList.Add(episode);
+                if (episode != null) episodeList.Add(episode);
             }
             series.Episodes = episodeList;
 
             return series;
         }
 
+        /// <summary>
+        /// Parse series metadata as xml element and returns null if xml is not valid (series has no id) 
+        /// </summary>
+        /// <param name="seriesXml">Series metadata as xml element</param>
+        /// <returns></returns>
         public Series Parse(XElement seriesXml)
         {
-            var id = seriesXml.ElementAsUInt("id");
+            if (seriesXml == null)
+            {
+                throw new ArgumentNullException("seriesXml", "Series xml element cannot be null");
+            }
 
+            // If series has no id skip parsing and return null
+            var id = seriesXml.ElementAsUInt("id");
             if (!id.HasValue) return null;
 
-            var x = new Series(id.Value)
+            return new Series(id.Value)
             {
                 ImdbId = seriesXml.ElementAsString("IMDB_ID"),
                 Title = seriesXml.ElementAsString("SeriesName", true),
@@ -74,9 +104,14 @@ namespace TheTVDBSharp.Services
                 ContentRating = seriesXml.ElementAsString("ContentRating").ToContentRating(),
                 Genres = seriesXml.ElementAsString("Genre").SplitByPipe()
             };
-            return x;
         }
 
+        /// <summary>
+        /// Parse complete series from an compressed stream with a given language and return null if stream or xml is not valid
+        /// </summary>
+        /// <param name="fullSeriesCompressedStream">Complete series zip compressed stream</param>
+        /// <param name="language">Series language</param>
+        /// <returns>Return the parsed complete series or null if stream or xml is not valid</returns>
         public async Task<Series> ParseFull(Stream fullSeriesCompressedStream, Language language)
         {
             string seriesRaw = null;
@@ -85,45 +120,62 @@ namespace TheTVDBSharp.Services
 
             using (ZipArchive archive = new ZipArchive(fullSeriesCompressedStream, ZipArchiveMode.Read))
             {
+                // Return null if series metadata cannot be retrieved from the compressed file.
                 seriesRaw = archive.GetEntry(language.ToShort() + ".xml").ReadToEnd();
+                if (seriesRaw == null) return null;
+
                 actorsRaw = archive.GetEntry("actors.xml").ReadToEnd();
                 bannersRaw = archive.GetEntry("banners.xml").ReadToEnd();
             }
 
-            var seriesTask = Task.Run(() =>
-            {
-                return Parse(seriesRaw);
-            });
+            // Create parse tasks if string not null
+            var seriesTask = Task.Run(() => this.Parse(seriesRaw));
+            var actorsTask = actorsRaw != null ?
+                Task.Run(() => actorParseService.Parse(actorsRaw)) :
+                null;
+            var bannersTask = bannersRaw != null ?
+                Task.Run(() => bannerParseService.Parse(bannersRaw)) :
+                null;
 
-            var actorsTask = Task.Run(() =>
-            {
-                return actorParseService.Parse(actorsRaw);
-            });
+            // Create tasks list to await it
+            List<Task> tasks = new List<Task>() { seriesTask };
+            if (actorsTask != null) tasks.Add(actorsTask);
+            if (bannersTask != null) tasks.Add(bannersTask);
 
-            var bannersTask = Task.Run(() => 
-            {
-                return bannerParseService.Parse(bannersRaw);
-            });                
-
-            await Task.WhenAll(seriesTask, actorsTask, bannersTask);
+            await Task.WhenAll(tasks);
 
             var series = seriesTask.Result;
-            series.Actors = actorsTask.Result;
-            series.Banners = bannersTask.Result;
+            if (actorsTask != null) series.Actors = actorsTask.Result;
+            if (bannersTask != null) series.Banners = bannersTask.Result;
 
             return series;
         }
 
+        /// <summary>
+        /// Parse search series collection xml document as string and return null if xml is not valid
+        /// </summary>
+        /// <param name="seriesCollectionRaw">Series collection xml document as string</param>
+        /// <returns>Return the parsed series collection or null if xml is not valid</returns>
         public IReadOnlyCollection<Series> ParseSearch(string seriesCollectionRaw)
         {
-            var seriesDoc = XDocument.Parse(seriesCollectionRaw);
+            if (seriesCollectionRaw == null)
+            {
+                throw new ArgumentNullException("seriesCollectionRaw", "Search collection as string cannot be null");
+            }
+
+            // If xml cannot be created return null
+            var seriesDoc = seriesCollectionRaw.ToXDocument();
+            if (seriesDoc == null) return null;
+
+            // If Data element is missing return null
             var seriesCollectionXml = seriesDoc.Element("Data");
 
             List<Series> seriesList = new List<Series>();
             foreach (var seriesXml in seriesCollectionXml.Elements("Series"))
             {
+                // If series could not be parsed skip it and continue
                 var series = Parse(seriesXml);
-                seriesList.Add(series);
+                if (series != null) seriesList.Add(series);
             }
 
             return seriesList;

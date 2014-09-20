@@ -6,7 +6,7 @@ namespace TheTVDBSharp.Services
     /// <summary>
     ///     Provides Date and Time extension methods.
     /// </summary>
-    public static class DateTimeExtension
+    public static class DateTimeExtensions
     {
         public static DateTime ToDateTime(this uint unixTime)
         {

@@ -60,12 +60,12 @@
     <Compile Include="Models\Interval.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Status.cs" />
-    <Compile Include="Services\DateTimeExtension.cs" />
+    <Compile Include="Services\DateTimeExtensions.cs" />
     <Compile Include="Services\SeriesParseService.cs" />
     <Compile Include="Services\StreamExtensions.cs" />
     <Compile Include="Services\UpdateParseService.cs" />
     <Compile Include="Services\UpdateServiceProxy.cs" />
-    <Compile Include="Services\XElementExtension.cs" />
+    <Compile Include="Services\XElementExtensions.cs" />
     <Compile Include="Services\StringExtensions.cs" />
     <Compile Include="ITheTVDBManager.cs" />
     <Compile Include="Models\Actor.cs" />

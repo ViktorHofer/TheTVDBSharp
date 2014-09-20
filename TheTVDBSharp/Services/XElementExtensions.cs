@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace TheTVDBSharp.Services
 {
-    public static class XElementExtension
+    public static class XElementExtensions
     {
         public static uint? ElementAsUInt(this XElement parent, string element)
         {

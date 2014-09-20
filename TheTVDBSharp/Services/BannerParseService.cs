@@ -8,25 +8,47 @@ namespace TheTVDBSharp.Services
 {
     public class BannerParseService : IBannerParseService
     {
+        /// <summary>
+        /// Parse banner collection as string and returns null if xml is not valid
+        /// </summary>
+        /// <param name="bannerCollectionRaw">Banner collection xml document as string</param>
+        /// <returns></returns>
         public IReadOnlyCollection<Banner> Parse(string bannerCollectionRaw)
         {
-            var doc = XDocument.Parse(bannerCollectionRaw);
+            // If xml cannot be created return null
+            var doc = bannerCollectionRaw.ToXDocument();
+            if (doc == null) return null;
+
+            // If Banners element is missing return null
             var bannersXml = doc.Element("Banners");
+            if (bannersXml == null) return null;
 
             var bannerList = new List<Banner>();
             foreach (var bannerXml in bannersXml.Elements("Banner"))
             {
+                // If banner could not be parsed skip it and continue
                 var banner = Parse(bannerXml);
-                bannerList.Add(banner);
+                if (banner != null) bannerList.Add(banner);
             }
 
             return bannerList;
         }
 
+        /// <summary>
+        /// Parse banner xml element and returns null if xml is not valid
+        /// </summary>
+        /// <param name="bannerXml">Banner xml element</param>
+        /// <returns>Return the created banner or null if xml is not valid</returns>
         public Banner Parse(XElement bannerXml)
         {
+            if (bannerXml == null)
+            {
+                throw new ArgumentNullException("bannerXml", "Banner xml cannot be null");
+            }
+
             Banner banner = null;
 
+            // If banner has no id return null
             var id = bannerXml.ElementAsUInt("id");
             if (!id.HasValue) return null;
 
