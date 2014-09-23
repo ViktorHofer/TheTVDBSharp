@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TheTVDBSharp.Models;
 
 namespace TheTVDBSharp.Services
@@ -16,12 +14,10 @@ namespace TheTVDBSharp.Services
 
         public async Task<string> Retrieve(uint episodeId, Language language)
         {
-            var url = new Uri(string.Format(episodeUrlFormat, base.proxyConfiguration.BaseUrl, base.proxyConfiguration.ApiKey, episodeId, language.ToShort()));
-
-            using (var client = new HttpClient())
-            {
-                return await client.GetStringAsync(url);
-            }
+            var url = string.Format(episodeUrlFormat, base.proxyConfiguration.BaseUrl, base.proxyConfiguration.ApiKey, episodeId, language.ToShort());
+            
+            var response = await base.GetAsync(url);
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

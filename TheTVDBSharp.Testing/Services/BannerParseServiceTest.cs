@@ -8,7 +8,7 @@ namespace TheTVDBSharp.Testing.Services
     [TestClass]
     public class BannerParseServiceTest
     {
-        private readonly IBannerParseService bannerParseService = new BannerParseService();
+        private readonly IBannerParseService bannerParseService = new BannerParseService(GlobalConfiguration.Logger);
 
         [TestMethod]
         public void Parse_Banners_76156_Test()

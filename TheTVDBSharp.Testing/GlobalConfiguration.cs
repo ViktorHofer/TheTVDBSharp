@@ -4,6 +4,7 @@ namespace TheTVDBSharp.Testing
 {
     public static partial class GlobalConfiguration
     {
+        public static readonly ISimpleLogger Logger = new SimpleLogger();
         public static readonly string API_KEY = "";
         public static readonly string BASE_URL = "http://thetvdb.com";
 

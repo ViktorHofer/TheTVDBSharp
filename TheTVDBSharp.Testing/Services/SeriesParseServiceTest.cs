@@ -14,13 +14,14 @@ namespace TheTVDBSharp.Testing.Services
 
         public SeriesParseServiceTest()
         {
-            var actorParseService = new ActorParseService();
-            var bannerParseService = new BannerParseService();
-            var episodeParseService = new EpisodeParseService();
+            var actorParseService = new ActorParseService(GlobalConfiguration.Logger);
+            var bannerParseService = new BannerParseService(GlobalConfiguration.Logger);
+            var episodeParseService = new EpisodeParseService(GlobalConfiguration.Logger);
 
             seriesParseService = new SeriesParseService(actorParseService,
                 bannerParseService,
-                episodeParseService); 
+                episodeParseService,
+                GlobalConfiguration.Logger); 
         }
 
         [TestMethod]

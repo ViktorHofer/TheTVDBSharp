@@ -7,7 +7,7 @@ namespace TheTVDBSharp.Testing.Services
     [TestClass]
     public class ActorParseServiceTest
     {
-        private readonly IActorParseService actorParseService = new ActorParseService();
+        private readonly IActorParseService actorParseService = new ActorParseService(GlobalConfiguration.Logger);
 
         [TestMethod]
         public void Parse_Actors_76156_Test()

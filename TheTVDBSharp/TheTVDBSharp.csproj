@@ -42,6 +42,7 @@
     <Compile Include="Models\SeriesUpdate.cs" />
     <Compile Include="Models\UpdateContainer.cs" />
     <Compile Include="Services\ActorParseService.cs" />
+    <Compile Include="Services\BadResponseException.cs" />
     <Compile Include="Services\BannerParseService.cs" />
     <Compile Include="Services\BannerServiceProxy.cs" />
     <Compile Include="Services\EpisodeParseService.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Models\Status.cs" />
     <Compile Include="Services\DateTimeExtensions.cs" />
     <Compile Include="Services\SeriesParseService.cs" />
+    <Compile Include="Services\ServerNotAvailableException.cs" />
     <Compile Include="Services\SimpleLogger.cs" />
     <Compile Include="Services\StreamExtensions.cs" />
     <Compile Include="Services\UpdateParseService.cs" />

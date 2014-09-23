@@ -7,7 +7,7 @@ namespace TheTVDBSharp.Testing.Services
     [TestClass]
     public class EpisodeParseServiceTest
     {
-        private readonly IEpisodeParseService episodeParseService = new EpisodeParseService();
+        private readonly IEpisodeParseService episodeParseService = new EpisodeParseService(GlobalConfiguration.Logger);
 
         [TestMethod]
         public void Parse_Episode_306213_Test()

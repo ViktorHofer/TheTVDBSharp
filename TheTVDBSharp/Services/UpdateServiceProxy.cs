@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Net.Http;
+﻿using System.IO;
 using System.Threading.Tasks;
 using TheTVDBSharp.Models;
 
@@ -18,23 +16,20 @@ namespace TheTVDBSharp.Services
 
         public async Task<Stream> Retrieve(Interval interval)
         {
-            var url = new Uri(string.Format(updateCompressedUrlFormat, base.proxyConfiguration.BaseUrl, base.proxyConfiguration.ApiKey, interval.ToApiString()));
+            var url = string.Format(updateCompressedUrlFormat, base.proxyConfiguration.BaseUrl, base.proxyConfiguration.ApiKey, interval.ToApiString());
 
-            using (var client = new HttpClient())
-            {
-                var message = await client.GetAsync(url, HttpCompletionOption.ResponseContentRead);
-                return await message.Content.ReadAsStreamAsync();
-            }
+            var response = await base.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStreamAsync();
         }
 
         public async Task<string> RetrieveUncompressed(Interval interval)
         {
-            var url = new Uri(string.Format(updateUncompressedUrlFormat, base.proxyConfiguration.BaseUrl, base.proxyConfiguration.ApiKey, interval.ToApiString()));
+            var url = string.Format(updateUncompressedUrlFormat, base.proxyConfiguration.BaseUrl, base.proxyConfiguration.ApiKey, interval.ToApiString());
 
-            using (var client = new HttpClient())
-            {
-                return await client.GetStringAsync(url);
-            }
+            var response = await base.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

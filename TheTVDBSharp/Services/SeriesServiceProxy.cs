@@ -19,33 +19,26 @@ namespace TheTVDBSharp.Services
 
         public async Task<Stream> RetrieveFull(uint showID, Language language)
         {
-            var url = new Uri(string.Format(fullSeriesUrlFormat, base.proxyConfiguration.BaseUrl, base.proxyConfiguration.ApiKey, showID, language.ToShort()));
+            var url = string.Format(fullSeriesUrlFormat, base.proxyConfiguration.BaseUrl, base.proxyConfiguration.ApiKey, showID, language.ToShort());
 
-            using (var client = new HttpClient())
-            {
-                var message = await client.GetAsync(url, HttpCompletionOption.ResponseContentRead);
-                return await message.Content.ReadAsStreamAsync();
-            }
+            var response = await base.GetAsync(url);
+            return await response.Content.ReadAsStreamAsync();
         }
 
         public async Task<string> Retrieve(uint showId, Language language)
         {
-            var url = new Uri(string.Format(seriesUrlFormat, base.proxyConfiguration.BaseUrl, base.proxyConfiguration.ApiKey, showId, language.ToShort()));
+            var url = string.Format(seriesUrlFormat, base.proxyConfiguration.BaseUrl, base.proxyConfiguration.ApiKey, showId, language.ToShort());
 
-            using (var client = new HttpClient())
-            {
-                return await client.GetStringAsync(url);
-            }
+            var response = await base.GetAsync(url);
+            return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<string> Search(string query, Language language)
         {
-            var url = new Uri(string.Format(searchSeriesUrlFormat, base.proxyConfiguration.BaseUrl, query, language.ToShort()));
+            var url = string.Format(searchSeriesUrlFormat, base.proxyConfiguration.BaseUrl, query, language.ToShort());
 
-            using (var client = new HttpClient())
-            {
-                return await client.GetStringAsync(url);
-            }
+            var response = await base.GetAsync(url);
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

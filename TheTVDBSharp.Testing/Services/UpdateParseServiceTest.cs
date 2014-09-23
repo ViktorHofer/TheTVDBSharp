@@ -7,7 +7,7 @@ namespace TheTVDBSharp.Testing.Services
     [TestClass]
     public class UpdateParseServiceTest
     {
-        private readonly IUpdateParseService updateParseService = new UpdateParseService();
+        private readonly IUpdateParseService updateParseService = new UpdateParseService(GlobalConfiguration.Logger);
 
         [TestMethod]
         public void Parse_Update_Day_Test()
