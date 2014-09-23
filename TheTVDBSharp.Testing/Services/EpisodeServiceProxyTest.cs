@@ -8,18 +8,13 @@ namespace TheTVDBSharp.Testing.Services
     [TestClass]
     public class EpisodeServiceProxyTest
     {
+        IEpisodeService episodeService = new EpisodeServiceProxy(GlobalConfiguration.ApiConfiguration);
+
         [TestMethod]
         public async Task Retrieve_Episode_306213_Test()
         {
-            var episodeProvider = new EpisodeServiceProxy(GlobalConfiguration.ApiConfiguration);
-
-            var realEpisodeRaw = await episodeProvider.Retrieve(306213, Models.Language.English);
-            realEpisodeRaw = XDocument.Parse(realEpisodeRaw).ToString();
-
-            var sampleEpisodeRaw = SampleDataHelper.Open(SampleDataHelper.SampleData.Episode_306213);
-            sampleEpisodeRaw = XDocument.Parse(sampleEpisodeRaw).ToString();
-
-            Assert.AreEqual(sampleEpisodeRaw, realEpisodeRaw);
+            var realEpisodeRaw = await episodeService.Retrieve(306213, Models.Language.English);
+            Assert.IsNotNull(realEpisodeRaw);
         }
     }
 }
