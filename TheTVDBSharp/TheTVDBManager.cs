@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TheTVDBSharp.Models;
 using TheTVDBSharp.Services;
@@ -10,6 +11,8 @@ namespace TheTVDBSharp
     /// </summary>
     public class TheTVDBManager : ITheTVDBManager
     {
+        private readonly ISimpleLogger logger;
+
         private readonly IEpisodeService episodeService;
         private readonly ISeriesService seriesService;
         private readonly IUpdateService updateService;
@@ -28,6 +31,16 @@ namespace TheTVDBSharp
         /// <param name="url">The API base url</param>
         public TheTVDBManager(string apiKey, string url = "http://thetvdb.com")
         {
+            // Logging
+            logger = new SimpleLogger();
+            logger.Logged += (s, e) =>
+            {
+                if (this.Logged != null)
+                {
+                    this.Logged(s, e);
+                }
+            };
+
             // Api Configuration
             var apiConfiguration = new ProxyConfiguration(apiKey, url);
 
@@ -38,12 +51,17 @@ namespace TheTVDBSharp
             this.bannerService = new BannerServiceProxy(apiConfiguration);
 
             // Parse Services
-            this.actorParseService = new ActorParseService();
-            this.bannerParseService = new BannerParseService();
-            this.episodeParseService = new EpisodeParseService();
-            this.seriesParseService = new SeriesParseService(actorParseService, bannerParseService, episodeParseService);
-            this.updateParseService = new UpdateParseService();
+            this.actorParseService = new ActorParseService(this.logger);
+            this.bannerParseService = new BannerParseService(this.logger);
+            this.episodeParseService = new EpisodeParseService(this.logger);
+            this.seriesParseService = new SeriesParseService(actorParseService, bannerParseService, episodeParseService, this.logger);
+            this.updateParseService = new UpdateParseService(this.logger);
         }
+
+        /// <summary>
+        /// Logging communication interface
+        /// </summary>
+        public event EventHandler<LogEventArgs> Logged;
 
         /// <summary>
         /// Search for a series with a given query and a language and returns null if api response is not well formed

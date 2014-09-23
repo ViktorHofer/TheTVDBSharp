@@ -9,6 +9,8 @@ namespace TheTVDBSharp.Services
     {
         public static XDocument ToXDocument(this string raw)
         {
+            if (string.IsNullOrWhiteSpace(raw)) return null;
+
             try
             {
                 return XDocument.Parse(raw);

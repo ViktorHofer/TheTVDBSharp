@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using TheTVDBSharp.Models;
 
@@ -8,6 +10,13 @@ namespace TheTVDBSharp.Services
 {
     public class UpdateParseService : IUpdateParseService
     {
+        private readonly ISimpleLogger logger;
+
+        public UpdateParseService(ISimpleLogger logger)
+        {
+            this.logger = logger;
+        }
+
         public UpdateContainer Parse(Stream updateContainerStream, Interval interval)
         {
             using (ZipArchive archive = new ZipArchive(updateContainerStream, ZipArchiveMode.Read))
@@ -20,8 +29,26 @@ namespace TheTVDBSharp.Services
 
         public UpdateContainer ParseUncompressed(string updateContainerRaw)
         {
-            var updateContainerDoc = XDocument.Parse(updateContainerRaw);
-            var updateContainerXml = updateContainerDoc.Element("Data");
+            if (string.IsNullOrWhiteSpace(updateContainerRaw)) throw new ArgumentNullException("updateContainerRaw", "Update container xml document as string cannot be null");
+
+            // If xml cannot be created return null
+            XDocument doc;
+            try
+            {
+                doc = XDocument.Parse(updateContainerRaw);
+            }
+            catch (XmlException e)
+            {
+                this.logger.Log("Search series collection string cannot be parsed into a xml document.", LogLevel.Error, e);
+                return null;
+            }
+
+            var updateContainerXml = doc.Element("Data");
+            if (updateContainerXml == null)
+            {
+                this.logger.Log("Error while parsing update xml document. Xml Element 'Data' is missing.", LogLevel.Error);
+                return null;
+            }
 
             UpdateContainer updateContainer = new UpdateContainer();
 

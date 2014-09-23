@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using TheTVDBSharp.Models;
 
@@ -8,6 +9,13 @@ namespace TheTVDBSharp.Services
 {
     public class BannerParseService : IBannerParseService
     {
+        private readonly ISimpleLogger logger;
+
+        public BannerParseService(ISimpleLogger logger)
+        {
+            this.logger = logger;
+        }
+
         /// <summary>
         /// Parse banner collection as string and returns null if xml is not valid
         /// </summary>
@@ -15,13 +23,30 @@ namespace TheTVDBSharp.Services
         /// <returns></returns>
         public IReadOnlyCollection<Banner> Parse(string bannerCollectionRaw)
         {
+            if (string.IsNullOrWhiteSpace(bannerCollectionRaw))
+            {
+                throw new ArgumentNullException("bannerCollectionRaw", "Banners collection xml document as string cannot be null");
+            }
+
             // If xml cannot be created return null
-            var doc = bannerCollectionRaw.ToXDocument();
-            if (doc == null) return null;
+            XDocument doc;
+            try
+            {
+                doc = XDocument.Parse(bannerCollectionRaw);
+            }
+            catch (XmlException e)
+            {
+                this.logger.Log("Banners collection string cannot be parsed into a xml document.", LogLevel.Error, e);
+                return null;
+            }
 
             // If Banners element is missing return null
             var bannersXml = doc.Element("Banners");
-            if (bannersXml == null) return null;
+            if (bannersXml == null)
+            {
+                this.logger.Log("Error while parsing banners xml document. Xml Element 'Banners' is missing.", LogLevel.Error);
+                return null;
+            }
 
             var bannerList = new List<Banner>();
             foreach (var bannerXml in bannersXml.Elements("Banner"))
@@ -50,7 +75,11 @@ namespace TheTVDBSharp.Services
 
             // If banner has no id return null
             var id = bannerXml.ElementAsUInt("id");
-            if (!id.HasValue) return null;
+            if (!id.HasValue)
+            {
+                this.logger.Log("Error while parsing a banner xml element. Banner id is missing.", LogLevel.Error);
+                return null;
+            }
 
             var bannerType = bannerXml.ElementAsString("BannerType");
             switch (bannerType)
@@ -67,6 +96,9 @@ namespace TheTVDBSharp.Services
                 case "series":
                     banner = CreateSeries(bannerXml, id.Value);
                     break;
+                default:
+                    this.logger.Log(string.Format("Error while parsing a banner xml element. BannerType '{0}' is unknown.", bannerType), LogLevel.Error);
+                    return null;
             }
 
             banner.Language = bannerXml.ElementAsString("Language").ToLanguage();

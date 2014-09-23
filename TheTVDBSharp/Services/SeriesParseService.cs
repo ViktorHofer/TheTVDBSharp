@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 using TheTVDBSharp.Models;
 
@@ -10,17 +11,20 @@ namespace TheTVDBSharp.Services
 {
     public class SeriesParseService : ISeriesParseService
     {
+        private readonly ISimpleLogger logger;
         private readonly IActorParseService actorParseService;
         private readonly IBannerParseService bannerParseService;
         private readonly IEpisodeParseService episodeParseService;
 
         public SeriesParseService(IActorParseService actorParseService,
             IBannerParseService bannerParseService,
-            IEpisodeParseService episodeParseService)
+            IEpisodeParseService episodeParseService,
+            ISimpleLogger logger)
         {
             this.actorParseService = actorParseService;
             this.bannerParseService = bannerParseService;
             this.episodeParseService = episodeParseService;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -30,27 +34,38 @@ namespace TheTVDBSharp.Services
         /// <returns>Returns the parsed series or null if xml is not valid</returns>
         public Series Parse(string seriesRaw)
         {
-            if (seriesRaw == null)
-            {
-                throw new ArgumentNullException("seriesRaw", "Series XML string cannot be null");
-            }
+            if (seriesRaw == null) throw new ArgumentNullException("seriesRaw", "Series xml string cannot be null");
 
             // If xml cannot be created return null
-            var seriesDoc = seriesRaw.ToXDocument();
-            if (seriesDoc == null) return null;
+            XDocument doc;
+            try
+            {
+                doc = XDocument.Parse(seriesRaw);
+            }
+            catch (XmlException e)
+            {
+                this.logger.Log("Series string cannot be parsed into a xml document.", LogLevel.Error, e);
+                return null;
+            }
 
             // If Data element is missing return null
-            var seriesXml = seriesDoc.Element("Data");
-            if (seriesXml == null) return null;
+            var seriesXml = doc.Element("Data");
+            if (seriesXml == null)
+            {
+                this.logger.Log("Error while parsing series xml document. Xml Element 'Data' is missing.", LogLevel.Error);
+                return null;
+            }
 
             // If Series element is missing return null
             var seriesMetaXml = seriesXml.Element("Series");
-            if (seriesMetaXml == null) return null;
+            if (seriesMetaXml == null)
+            {
+                this.logger.Log("Error while parsing series xml document. Xml Element 'Series' is missing.", LogLevel.Error);
+                return null;
+            }
 
             // Parsing series metadata
             var series = Parse(seriesMetaXml);
-
-            // If invalid series metadata then return
             if (series == null) return null;
 
             // Parsing episodes
@@ -73,14 +88,15 @@ namespace TheTVDBSharp.Services
         /// <returns></returns>
         public Series Parse(XElement seriesXml)
         {
-            if (seriesXml == null)
-            {
-                throw new ArgumentNullException("seriesXml", "Series xml element cannot be null");
-            }
+            if (seriesXml == null) throw new ArgumentNullException("seriesXml", "Series xml element cannot be null");
 
             // If series has no id skip parsing and return null
             var id = seriesXml.ElementAsUInt("id");
-            if (!id.HasValue) return null;
+            if (!id.HasValue)
+            {
+                this.logger.Log("Error while parsing a series xml element. Id is missing.", LogLevel.Error);
+                return null;
+            }
 
             return new Series(id.Value)
             {
@@ -158,17 +174,27 @@ namespace TheTVDBSharp.Services
         /// <returns>Return the parsed series collection or null if xml is not valid</returns>
         public IReadOnlyCollection<Series> ParseSearch(string seriesCollectionRaw)
         {
-            if (seriesCollectionRaw == null)
-            {
-                throw new ArgumentNullException("seriesCollectionRaw", "Search collection as string cannot be null");
-            }
+            if (seriesCollectionRaw == null) throw new ArgumentNullException("seriesCollectionRaw", "Search collection as string cannot be null");
 
             // If xml cannot be created return null
-            var seriesDoc = seriesCollectionRaw.ToXDocument();
-            if (seriesDoc == null) return null;
+            XDocument doc;
+            try
+            {
+                doc = XDocument.Parse(seriesCollectionRaw);
+            }
+            catch (XmlException e)
+            {
+                this.logger.Log("Search series collection string cannot be parsed into a xml document.", LogLevel.Error, e);
+                return null;
+            }
 
             // If Data element is missing return null
-            var seriesCollectionXml = seriesDoc.Element("Data");
+            var seriesCollectionXml = doc.Element("Data");
+            if (seriesCollectionXml == null)
+            {
+                this.logger.Log("Error while parsing series xml document. Xml Element 'Data' is missing.", LogLevel.Error);
+                return null;
+            }
 
             List<Series> seriesList = new List<Series>();
             foreach (var seriesXml in seriesCollectionXml.Elements("Series"))
