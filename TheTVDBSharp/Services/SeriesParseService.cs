@@ -98,7 +98,7 @@ namespace TheTVDBSharp.Services
                 return null;
             }
 
-            return new Series(id.Value)
+            var series = new Series(id.Value)
             {
                 ImdbId = seriesXml.ElementAsString("IMDB_ID"),
                 Title = seriesXml.ElementAsString("SeriesName", true),
@@ -120,6 +120,13 @@ namespace TheTVDBSharp.Services
                 ContentRating = seriesXml.ElementAsString("ContentRating").ToContentRating(),
                 Genres = seriesXml.ElementAsString("Genre").SplitByPipe()
             };
+
+            if (series.FirstAired.HasValue)
+            {
+                series.Title = series.Title.Replace(string.Format(" ({0})", series.FirstAired.Value.Year), "");
+            }
+
+            return series;
         }
 
         /// <summary>

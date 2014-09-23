@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using TheTVDBSharp.Models;
 using TheTVDBSharp.Services;
 
@@ -66,5 +67,13 @@ namespace TheTVDBSharp.Testing.Services
             Assert.AreEqual(new TimeSpan(20, 0, 0), series.AirTime);
         }
 
+        [TestMethod]
+        public void Parse_RemoveYearIfInTitle_Test()
+        {
+            var sampleSeriesRaw = SampleDataHelper.Open(SampleDataHelper.SampleData.Series_76156);
+            var series = seriesParseService.Parse(sampleSeriesRaw);
+
+            Assert.AreEqual("Scrubs", series.Title);
+        }
     }
 }
