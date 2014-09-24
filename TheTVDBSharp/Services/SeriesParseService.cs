@@ -86,7 +86,7 @@ namespace TheTVDBSharp.Services
         /// </summary>
         /// <param name="seriesXml">Series metadata as xml element</param>
         /// <returns></returns>
-        public Series Parse(XElement seriesXml)
+        public Series Parse(XElement seriesXml, bool isSearchElement = false)
         {
             if (seriesXml == null) throw new ArgumentNullException("seriesXml", "Series xml element cannot be null");
 
@@ -102,7 +102,7 @@ namespace TheTVDBSharp.Services
             {
                 ImdbId = seriesXml.ElementAsString("IMDB_ID"),
                 Title = seriesXml.ElementAsString("SeriesName", true),
-                Language = seriesXml.ElementAsString("Language").ToLanguage(),
+                Language = seriesXml.ElementAsString(isSearchElement ? "language" : "Language").ToLanguage(),
                 Network = seriesXml.ElementAsString("Network"),
                 Description = seriesXml.ElementAsString("Overview", true),
                 Rating = seriesXml.ElementAsDouble("Rating"),
