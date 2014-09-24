@@ -207,7 +207,7 @@ namespace TheTVDBSharp.Services
             foreach (var seriesXml in seriesCollectionXml.Elements("Series"))
             {
                 // If series could not be parsed skip it and continue
-                var series = Parse(seriesXml);
+                var series = Parse(seriesXml, true);
                 if (series != null) seriesList.Add(series);
             }
 
