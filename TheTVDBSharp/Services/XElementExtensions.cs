@@ -81,7 +81,7 @@ namespace TheTVDBSharp.Services
         {
             TEnum result;
             var value = ElementAsString(parent, element);
-            if (value != null && Enum.TryParse<TEnum>(value, out result))
+            if (value != null && Enum.TryParse(value, out result))
             {
                 return result;
             }

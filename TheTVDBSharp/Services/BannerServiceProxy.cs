@@ -11,10 +11,10 @@ namespace TheTVDBSharp.Services
 
         public async Task<byte[]> Retrieve(string remotePath)
         {
-            var url = string.Format("{0}/banners/{1}", base.proxyConfiguration.BaseUrl, remotePath);
+            var url = string.Format("{0}/banners/{1}", ProxyConfiguration.BaseUrl, remotePath);
 
-            var response = await base.GetAsync(url);
-            response.EnsureSuccessStatusCode();
+            var response = await GetAsync(url);
+
             return await response.Content.ReadAsByteArrayAsync();
         }
     }

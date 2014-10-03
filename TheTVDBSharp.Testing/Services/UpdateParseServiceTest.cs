@@ -7,13 +7,13 @@ namespace TheTVDBSharp.Testing.Services
     [TestClass]
     public class UpdateParseServiceTest
     {
-        private readonly IUpdateParseService updateParseService = new UpdateParseService(GlobalConfiguration.Logger);
+        private readonly IUpdateParseService _updateParseService = new UpdateParseService();
 
         [TestMethod]
         public void Parse_Update_Day_Test()
         {
-            var updateContainerStream = SampleDataHelper.OpenStream(SampleDataHelper.SampleData.Updates_Day);
-            var updateContainer = this.updateParseService.Parse(updateContainerStream, Models.Interval.Day);
+            var updateContainerStream = SampleDataHelper.OpenStream(SampleDataHelper.SampleData.UpdatesDay);
+            var updateContainer = _updateParseService.Parse(updateContainerStream, Models.Interval.Day);
 
             Assert.IsNotNull(updateContainer);
             Assert.AreEqual(141, updateContainer.BannerCollection.Count);

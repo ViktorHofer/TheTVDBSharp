@@ -51,9 +51,9 @@
     <Compile Include="Services\IBannerService.cs" />
     <Compile Include="Services\IEpisodeParseService.cs" />
     <Compile Include="Services\ISeriesParseService.cs" />
-    <Compile Include="Services\ISimpleLogger.cs" />
     <Compile Include="Services\IUpdateParseService.cs" />
     <Compile Include="Services\IUpdateService.cs" />
+    <Compile Include="Services\ParseException.cs" />
     <Compile Include="Services\ProxyBase.cs" />
     <Compile Include="Services\ProxyConfiguration.cs" />
     <Compile Include="Services\IProxyConfiguration.cs" />
@@ -65,7 +65,6 @@
     <Compile Include="Services\DateTimeExtensions.cs" />
     <Compile Include="Services\SeriesParseService.cs" />
     <Compile Include="Services\ServerNotAvailableException.cs" />
-    <Compile Include="Services\SimpleLogger.cs" />
     <Compile Include="Services\StreamExtensions.cs" />
     <Compile Include="Services\UpdateParseService.cs" />
     <Compile Include="Services\UpdateServiceProxy.cs" />

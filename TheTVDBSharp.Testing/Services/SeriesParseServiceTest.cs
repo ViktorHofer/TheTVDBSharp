@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using TheTVDBSharp.Models;
 using TheTVDBSharp.Services;
 
@@ -11,25 +10,24 @@ namespace TheTVDBSharp.Testing.Services
     [TestClass]
     public class SeriesParseServiceTest
     {
-        private readonly ISeriesParseService seriesParseService;
+        private readonly ISeriesParseService _seriesParseService;
 
         public SeriesParseServiceTest()
         {
-            var actorParseService = new ActorParseService(GlobalConfiguration.Logger);
-            var bannerParseService = new BannerParseService(GlobalConfiguration.Logger);
-            var episodeParseService = new EpisodeParseService(GlobalConfiguration.Logger);
+            var actorParseService = new ActorParseService();
+            var bannerParseService = new BannerParseService();
+            var episodeParseService = new EpisodeParseService();
 
-            seriesParseService = new SeriesParseService(actorParseService,
+            _seriesParseService = new SeriesParseService(actorParseService,
                 bannerParseService,
-                episodeParseService,
-                GlobalConfiguration.Logger); 
+                episodeParseService); 
         }
 
         [TestMethod]
         public void Parse_Series_76156_Test()
         {
-            var sampleSeriesRaw = SampleDataHelper.Open(SampleDataHelper.SampleData.Series_76156);
-            var series = seriesParseService.Parse(sampleSeriesRaw);
+            var sampleSeriesRaw = SampleDataHelper.Open(SampleDataHelper.SampleData.Series76156);
+            var series = _seriesParseService.Parse(sampleSeriesRaw);
 
             Assert.IsNotNull(series);
             Assert.AreEqual((uint)76156, series.Id);
@@ -42,8 +40,8 @@ namespace TheTVDBSharp.Testing.Services
         [TestMethod]
         public void Parse_Search_Scrubs_Test()
         {
-            var sampleSeriesCollectionRaw = SampleDataHelper.Open(SampleDataHelper.SampleData.Search_Scrubs);
-            var seriesCollection = seriesParseService.ParseSearch(sampleSeriesCollectionRaw);
+            var sampleSeriesCollectionRaw = SampleDataHelper.Open(SampleDataHelper.SampleData.SearchScrubs);
+            var seriesCollection = _seriesParseService.ParseSearch(sampleSeriesCollectionRaw);
 
             Assert.IsNotNull(seriesCollection);
             Assert.AreEqual(2, seriesCollection.Count);
@@ -54,8 +52,8 @@ namespace TheTVDBSharp.Testing.Services
         [TestMethod]
         public async Task Parse_FullSeries_76156_Test()
         {
-            var sampleFullSeriesCompressedStream = SampleDataHelper.OpenStream(SampleDataHelper.SampleData.SeriesFull_76156);
-            var series = await seriesParseService.ParseFull(sampleFullSeriesCompressedStream, Language.English);
+            var sampleFullSeriesCompressedStream = SampleDataHelper.OpenStream(SampleDataHelper.SampleData.SeriesFull76156);
+            var series = await _seriesParseService.ParseFull(sampleFullSeriesCompressedStream, Language.English);
 
             Assert.IsNotNull(series);
             Assert.AreEqual((uint)76156, series.Id);
@@ -70,8 +68,8 @@ namespace TheTVDBSharp.Testing.Services
         [TestMethod]
         public void Parse_RemoveYearIfInTitle_Test()
         {
-            var sampleSeriesRaw = SampleDataHelper.Open(SampleDataHelper.SampleData.Series_76156);
-            var series = seriesParseService.Parse(sampleSeriesRaw);
+            var sampleSeriesRaw = SampleDataHelper.Open(SampleDataHelper.SampleData.Series76156);
+            var series = _seriesParseService.Parse(sampleSeriesRaw);
 
             Assert.AreEqual("Scrubs", series.Title);
         }

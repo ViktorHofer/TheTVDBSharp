@@ -4,11 +4,11 @@ namespace TheTVDBSharp.Models
 {
     public class Banner : IEquatable<Banner>
     {
-        private readonly uint id;
+        private readonly uint _id;
 
         public uint Id
         {
-            get { return this.id; }
+            get { return _id; }
         }
 
         public string RemotePath { get; set; }
@@ -21,22 +21,22 @@ namespace TheTVDBSharp.Models
 
         public Banner(uint id)
         {
-            this.id = id;
+            _id = id;
         }
 
         public bool Equals(Banner other)
         {
-            return other != null && other.id == this.id;
+            return other != null && other._id == _id;
         }
 
         public override bool Equals(object obj)
         {
-            return this.Equals(obj as Banner);
+            return Equals(obj as Banner);
         }
 
         public override int GetHashCode()
         {
-            return this.id.GetHashCode();
+            return _id.GetHashCode();
         }
     }
 }

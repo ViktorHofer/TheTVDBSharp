@@ -8,14 +8,14 @@ namespace TheTVDBSharp.Models
     /// </summary>
     public class Series : IEquatable<Series>
     {
-        private readonly uint id;
+        private readonly uint _id;
 
         /// <summary>
         ///     Unique identifier used by TVDB and TVDBSharp.
         /// </summary>
         public uint Id
         {
-            get { return this.id; }
+            get { return _id; }
         }
 
         /// <summary>
@@ -127,22 +127,22 @@ namespace TheTVDBSharp.Models
 
         public Series(uint id)
         {
-            this.id = id;
+            _id = id;
         }
 
         public bool Equals(Series other)
         {
-            return other != null && this.id == other.id;
+            return other != null && _id == other._id;
         }
 
         public override bool Equals(object obj)
         {
-            return this.Equals(obj as Series);
+            return Equals(obj as Series);
         }
 
         public override int GetHashCode()
         {
-            return this.id.GetHashCode();
+            return _id.GetHashCode();
         }
     }
 }

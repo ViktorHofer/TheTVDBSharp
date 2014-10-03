@@ -10,16 +10,11 @@ namespace TheTVDBSharp.Services
 {
     public class UpdateParseService : IUpdateParseService
     {
-        private readonly ISimpleLogger logger;
-
-        public UpdateParseService(ISimpleLogger logger)
-        {
-            this.logger = logger;
-        }
-
         public UpdateContainer Parse(Stream updateContainerStream, Interval interval)
         {
-            using (ZipArchive archive = new ZipArchive(updateContainerStream, ZipArchiveMode.Read))
+            if (updateContainerStream == null) throw new ArgumentNullException("updateContainerStream");
+
+            using (var archive = new ZipArchive(updateContainerStream, ZipArchiveMode.Read))
             {
                 var entryName = string.Format("updates_{0}.xml", interval.ToApiString());
                 var updateContainerRaw = archive.GetEntry(entryName).ReadToEnd();
@@ -29,7 +24,7 @@ namespace TheTVDBSharp.Services
 
         public UpdateContainer ParseUncompressed(string updateContainerRaw)
         {
-            if (string.IsNullOrWhiteSpace(updateContainerRaw)) throw new ArgumentNullException("updateContainerRaw", "Update container xml document as string cannot be null");
+            if (updateContainerRaw == null) throw new ArgumentNullException("updateContainerRaw");
 
             // If xml cannot be created return null
             XDocument doc;
@@ -39,18 +34,13 @@ namespace TheTVDBSharp.Services
             }
             catch (XmlException e)
             {
-                this.logger.Log("Search series collection string cannot be parsed into a xml document.", LogLevel.Error, e);
-                return null;
+                throw new ParseException("Search series collection string cannot be parsed into a xml document.", e);
             }
 
             var updateContainerXml = doc.Element("Data");
-            if (updateContainerXml == null)
-            {
-                this.logger.Log("Error while parsing update xml document. Xml Element 'Data' is missing.", LogLevel.Error);
-                return null;
-            }
+            if (updateContainerXml == null) throw new ParseException("Error while parsing update xml document. Xml Element 'Data' is missing.");
 
-            UpdateContainer updateContainer = new UpdateContainer();
+            var updateContainer = new UpdateContainer();
 
             uint lastUpdatedEpoch;
             var lastUpdatedRaw = updateContainerXml.Attribute("time").Value;
@@ -60,48 +50,54 @@ namespace TheTVDBSharp.Services
             }
 
             updateContainer.SeriesCollection = updateContainerXml.Elements("Series")
-                .Select(seriesUpdateXml => ParseSeriesUpdate(seriesUpdateXml))
+                .Select(ParseSeriesUpdate)
                 .ToList();
 
             updateContainer.EpisodeCollection = updateContainerXml.Elements("Episode")
-                .Select(episodeUpdateXml => ParseEpisodeUpdate(episodeUpdateXml))
+                .Select(ParseEpisodeUpdate)
                 .ToList();
 
             updateContainer.BannerCollection = updateContainerXml.Elements("Banner")
-                .Select(bannerUpdateXml => ParseBannerUpdate(bannerUpdateXml))
+                .Select(ParseBannerUpdate)
                 .ToList();
 
             return updateContainer;
         }
 
-        private SeriesUpdate ParseSeriesUpdate(XElement seriesUpdateXml)
+        private static SeriesUpdate ParseSeriesUpdate(XElement seriesUpdateXml)
         {
-            return new SeriesUpdate()
+            if (seriesUpdateXml == null) throw new ArgumentNullException("seriesUpdateXml");
+
+            return new SeriesUpdate
             {
-                Id = seriesUpdateXml.ElementAsUInt("id").Value,
-                LastUpdated = seriesUpdateXml.ElementFromEpochToDateTime("time").Value
+                Id = seriesUpdateXml.ElementAsUInt("id").GetValueOrDefault(),
+                LastUpdated = seriesUpdateXml.ElementFromEpochToDateTime("time").GetValueOrDefault()
             };
         }
 
-        private EpisodeUpdate ParseEpisodeUpdate(XElement episodeUpdateXml)
+        private static EpisodeUpdate ParseEpisodeUpdate(XElement episodeUpdateXml)
         {
-            return new EpisodeUpdate()
+            if (episodeUpdateXml == null) throw new ArgumentNullException("episodeUpdateXml");
+
+            return new EpisodeUpdate
             {
-                Id = episodeUpdateXml.ElementAsUInt("id").Value,
-                SeriesId = episodeUpdateXml.ElementAsUInt("Series").Value,
-                LastUpdated = episodeUpdateXml.ElementFromEpochToDateTime("time").Value
+                Id = episodeUpdateXml.ElementAsUInt("id").GetValueOrDefault(),
+                SeriesId = episodeUpdateXml.ElementAsUInt("Series").GetValueOrDefault(),
+                LastUpdated = episodeUpdateXml.ElementFromEpochToDateTime("time").GetValueOrDefault()
             };
         }
 
-        private BannerUpdate ParseBannerUpdate(XElement bannerUpdateXml)
+        private static BannerUpdate ParseBannerUpdate(XElement bannerUpdateXml)
         {
-            return new BannerUpdate()
+            if (bannerUpdateXml == null) throw new ArgumentNullException("bannerUpdateXml");
+
+            return new BannerUpdate
             {
-                SeriesId = bannerUpdateXml.ElementAsUInt("Series").Value,
+                SeriesId = bannerUpdateXml.ElementAsUInt("Series").GetValueOrDefault(),
                 RemotePath = bannerUpdateXml.ElementAsString("path"),
                 SeasonNumber = bannerUpdateXml.ElementAsUInt("SeasonNum"),
                 Language = bannerUpdateXml.ElementAsString("language").ToLanguage(),
-                LastUpdated = bannerUpdateXml.ElementFromEpochToDateTime("time").Value
+                LastUpdated = bannerUpdateXml.ElementFromEpochToDateTime("time").GetValueOrDefault()
             };
         }
     }

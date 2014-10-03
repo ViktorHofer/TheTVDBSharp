@@ -7,13 +7,6 @@ namespace TheTVDBSharp.Services
 {
     public class EpisodeParseService : IEpisodeParseService
     {
-        private readonly ISimpleLogger logger;
-
-        public EpisodeParseService(ISimpleLogger logger)
-        {
-            this.logger = logger;
-        }
-
         /// <summary>
         /// Parse episode xml document as string and return null if xml is not valid
         /// </summary>
@@ -21,7 +14,7 @@ namespace TheTVDBSharp.Services
         /// <returns>Return parsed episode or null if xml is not valid</returns>
         public Episode Parse(string episodeRaw)
         {
-            if (string.IsNullOrWhiteSpace(episodeRaw)) throw new ArgumentNullException("episodeRaw", "Episode xml document as string cannot be null");
+            if (episodeRaw == null) throw new ArgumentNullException("episodeRaw");
 
             // If xml cannot be created return null
             XDocument doc;
@@ -31,25 +24,16 @@ namespace TheTVDBSharp.Services
             }
             catch (XmlException e)
             {
-                this.logger.Log("Episode string cannot be parsed into a xml document.", LogLevel.Error, e);
-                return null;
+                throw new ParseException("Episode string cannot be parsed into a xml document.", e);
             }
 
             // If Data element is missing return null
             var dataXml = doc.Element("Data");
-            if (dataXml == null)
-            {
-                this.logger.Log("Error while parsing episode xml document. Xml Element 'Data' is missing.", LogLevel.Error);
-                return null;
-            }
+            if (dataXml == null) throw new ParseException("Error while parsing episode xml document. Xml Element 'Data' is missing.");
 
             // If episode element is missing return null
             var episodeXml = dataXml.Element("Episode");
-            if (episodeXml == null)
-            {
-                this.logger.Log("Error while parsing episode xml document. Xml Element 'Episode' is missing.", LogLevel.Error);
-                return null;
-            }
+            if (episodeXml == null) throw new ParseException("Error while parsing episode xml document. Xml Element 'Episode' is missing.");
 
             return Parse(episodeXml);
         }
@@ -61,24 +45,16 @@ namespace TheTVDBSharp.Services
         /// <returns>Return parsed episode or null if xml is not valid</returns>
         public Episode Parse(XElement episodeXml)
         {
-            if (episodeXml == null) throw new ArgumentNullException("episodeXml", "Episode xml cannot be null");
+            if (episodeXml == null) throw new ArgumentNullException("episodeXml");
 
             // If episode has no id or number skip parsing and return null
             var id = episodeXml.ElementAsUInt("id");
-            if (!id.HasValue)
-            {
-                this.logger.Log("Error while parsing an episode xml element. Id is missing.", LogLevel.Error);
-                return null;
-            }
+            if (!id.HasValue) throw new ParseException("Error while parsing an episode xml element. Id is missing.");
 
             var number = episodeXml.ElementAsInt("EpisodeNumber");
-            if (!number.HasValue)
-            {
-                this.logger.Log("Error while parsing an episode xml element. EpisodeNumber is missing.", LogLevel.Error);
-                return null;
-            }
+            if (!number.HasValue) throw new ParseException("Error while parsing an episode xml element. EpisodeNumber is missing.");
 
-            var episode = new Episode(id.Value)
+            return new Episode(id.Value)
             {
                 SeasonId = episodeXml.ElementAsUInt("seasonid"),
                 SeasonNumber = episodeXml.ElementAsUInt("SeasonNumber"),
@@ -97,8 +73,6 @@ namespace TheTVDBSharp.Services
                 Language = episodeXml.ElementAsString("Language").ToLanguage(),
                 LastUpdated = episodeXml.ElementFromEpochToDateTime("lastupdated")
             };
-
-            return episode;
         }
     }
 }

@@ -8,14 +8,14 @@ namespace TheTVDBSharp.Models
     /// </summary>
     public class Episode : IEquatable<Episode>
     {
-        private readonly uint id;
+        private readonly uint _id;
 
         /// <summary>
         ///     Unique identifier for an episode.
         /// </summary>
         public uint Id
         {
-            get { return this.id; }
+            get { return _id; }
         }
 
         /// <summary>
@@ -100,22 +100,22 @@ namespace TheTVDBSharp.Models
 
         public Episode(uint id)
         {
-            this.id = id;
+            _id = id;
         }
 
         public bool Equals(Episode other)
         {
-            return other != null && this.id == other.id;
+            return other != null && _id == other._id;
         }
 
         public override bool Equals(object obj)
         {
-            return this.Equals(obj as Episode);
+            return Equals(obj as Episode);
         }
 
         public override int GetHashCode()
         {
-            return this.id.GetHashCode();
+            return _id.GetHashCode();
         }
     }
 }

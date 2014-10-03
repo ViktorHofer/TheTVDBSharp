@@ -25,7 +25,7 @@ namespace TheTVDBSharp.Services
         {
             if (String.IsNullOrWhiteSpace(raw)) return null;
 
-            return raw.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+            return raw.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }

@@ -85,7 +85,7 @@ namespace TheTVDBSharp.Models
             }
         }
 
-        public static int? ToID(this Language val)
+        public static int? ToId(this Language val)
         {
             switch (val)
             {

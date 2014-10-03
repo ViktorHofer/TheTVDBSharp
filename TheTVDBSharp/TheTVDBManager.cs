@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TheTVDBSharp.Models;
 using TheTVDBSharp.Services;
@@ -9,59 +8,40 @@ namespace TheTVDBSharp
     /// <summary>
     /// The main class which will handle all user interaction
     /// </summary>
-    public class TheTVDBManager : ITheTVDBManager
+    public class TheTvdbManager : ITheTvdbManager
     {
-        private readonly ISimpleLogger logger;
+        private readonly IEpisodeService _episodeService;
+        private readonly ISeriesService _seriesService;
+        private readonly IUpdateService _updateService;
+        private readonly IBannerService _bannerService;
 
-        private readonly IEpisodeService episodeService;
-        private readonly ISeriesService seriesService;
-        private readonly IUpdateService updateService;
-        private readonly IBannerService bannerService;
-
-        private readonly IActorParseService actorParseService;
-        private readonly IBannerParseService bannerParseService;
-        private readonly IEpisodeParseService episodeParseService;
-        private readonly ISeriesParseService seriesParseService;
-        private readonly IUpdateParseService updateParseService;
+        private readonly IEpisodeParseService _episodeParseService;
+        private readonly ISeriesParseService _seriesParseService;
+        private readonly IUpdateParseService _updateParseService;
 
         /// <summary>
         /// Creates a new instance with the provided API key and a base api url
         /// </summary>
         /// <param name="apiKey">The API key provided by TVDB</param>
         /// <param name="url">The API base url</param>
-        public TheTVDBManager(string apiKey, string url = "http://thetvdb.com")
+        public TheTvdbManager(string apiKey, string url = "http://thetvdb.com")
         {
-            // Logging
-            logger = new SimpleLogger();
-            logger.Logged += (s, e) =>
-            {
-                if (this.Logged != null)
-                {
-                    this.Logged(s, e);
-                }
-            };
-
             // Api Configuration
             var apiConfiguration = new ProxyConfiguration(apiKey, url);
 
             // Proxy Services
-            this.seriesService = new SeriesServiceProxy(apiConfiguration);
-            this.episodeService = new EpisodeServiceProxy(apiConfiguration);
-            this.updateService = new UpdateServiceProxy(apiConfiguration);
-            this.bannerService = new BannerServiceProxy(apiConfiguration);
+            _seriesService = new SeriesServiceProxy(apiConfiguration);
+            _episodeService = new EpisodeServiceProxy(apiConfiguration);
+            _updateService = new UpdateServiceProxy(apiConfiguration);
+            _bannerService = new BannerServiceProxy(apiConfiguration);
 
-            // Parse Services
-            this.actorParseService = new ActorParseService(this.logger);
-            this.bannerParseService = new BannerParseService(this.logger);
-            this.episodeParseService = new EpisodeParseService(this.logger);
-            this.seriesParseService = new SeriesParseService(actorParseService, bannerParseService, episodeParseService, this.logger);
-            this.updateParseService = new UpdateParseService(this.logger);
+            // Initialize parse services
+            var actorParseService = new ActorParseService();
+            var bannerParseService = new BannerParseService();
+            _episodeParseService = new EpisodeParseService();
+            _seriesParseService = new SeriesParseService(actorParseService, bannerParseService, _episodeParseService);
+            _updateParseService = new UpdateParseService();
         }
-
-        /// <summary>
-        /// Logging communication interface
-        /// </summary>
-        public event EventHandler<LogEventArgs> Logged;
 
         /// <summary>
         /// Search for a series with a given query and a language and returns null if api response is not well formed
@@ -71,10 +51,8 @@ namespace TheTVDBSharp
         /// <returns>Returns a readonly collection of series or null if response is not well formed</returns>
         public async Task<IReadOnlyCollection<Series>> SearchSeries(string query, Language language)
         {
-            var seriesCollectionRaw = await this.seriesService.Search(query, language);
-            if (seriesCollectionRaw == null) return null;
-
-            return this.seriesParseService.ParseSearch(seriesCollectionRaw);
+            var seriesCollectionRaw = await _seriesService.Search(query, language);
+            return _seriesParseService.ParseSearch(seriesCollectionRaw);
         }
 
         /// <summary>
@@ -90,18 +68,12 @@ namespace TheTVDBSharp
         {
             if (compression)
             {
-                var fullSeriesStream = await this.seriesService.RetrieveFull(seriesId, language);
-                if (fullSeriesStream == null) return null;
-
-                return await this.seriesParseService.ParseFull(fullSeriesStream, language);
+                var fullSeriesStream = await _seriesService.RetrieveFull(seriesId, language);
+                return await _seriesParseService.ParseFull(fullSeriesStream, language);
             }
-            else
-            {
-                var seriesRaw = await this.seriesService.Retrieve(seriesId, language);
-                if (seriesRaw == null) return null;
-
-                return this.seriesParseService.Parse(seriesRaw);
-            }
+            
+            var seriesRaw = await _seriesService.Retrieve(seriesId, language);
+            return _seriesParseService.Parse(seriesRaw);
         }
 
         /// <summary>
@@ -112,10 +84,8 @@ namespace TheTVDBSharp
         /// <returns>The corresponding episode or null if api response is not well formed</returns>
         public async Task<Episode> GetEpisode(uint episodeId, Language language)
         {
-            var episodeRaw = await this.episodeService.Retrieve(episodeId, language);
-            if (episodeRaw == null) return null;
-
-            return this.episodeParseService.Parse(episodeRaw);
+            var episodeRaw = await _episodeService.Retrieve(episodeId, language);
+            return _episodeParseService.Parse(episodeRaw);
         }
 
         /// <summary>
@@ -131,18 +101,12 @@ namespace TheTVDBSharp
         {
             if (compression)
             {
-                var updateContainerStream = await this.updateService.Retrieve(interval);
-                if (updateContainerStream == null) return null;
-
-                return this.updateParseService.Parse(updateContainerStream, interval);
+                var updateContainerStream = await _updateService.Retrieve(interval);
+                return _updateParseService.Parse(updateContainerStream, interval);
             }
-            else
-            {
-                var updateContainerRaw = await this.updateService.RetrieveUncompressed(interval);
-                if (updateContainerRaw == null) return null;
-
-                return this.updateParseService.ParseUncompressed(updateContainerRaw);
-            }
+            
+            var updateContainerRaw = await _updateService.RetrieveUncompressed(interval);
+            return _updateParseService.ParseUncompressed(updateContainerRaw);
         }
 
         /// <summary>
@@ -153,7 +117,7 @@ namespace TheTVDBSharp
         /// <returns>Returns the banner as byte array.</returns>
         public async Task<byte[]> GetBanner(string remotePath)
         {
-            return await this.bannerService.Retrieve(remotePath);
+            return await _bannerService.Retrieve(remotePath);
         }
     }
 }

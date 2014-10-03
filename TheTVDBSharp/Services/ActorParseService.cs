@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using TheTVDBSharp.Models;
@@ -8,13 +9,6 @@ namespace TheTVDBSharp.Services
 {
     public class ActorParseService : IActorParseService
     {
-        private readonly ISimpleLogger logger;
-
-        public ActorParseService(ISimpleLogger logger)
-        {
-            this.logger = logger;
-        }
-
         /// <summary>
         /// Parse and actors collection as string and returns null if xml not valid
         /// </summary>
@@ -22,7 +16,7 @@ namespace TheTVDBSharp.Services
         /// <returns>Returns the parsed actors collection or null if xml is not valid</returns>
         public IReadOnlyCollection<Actor> Parse(string actorCollectionRaw)
         {
-            if (string.IsNullOrWhiteSpace(actorCollectionRaw)) throw new ArgumentNullException("actorCollectionRaw", "Actor collection xml document as string cannot be null");
+            if (actorCollectionRaw == null) throw new ArgumentNullException("actorCollectionRaw");
 
             // If xml cannot be created return null
             XDocument doc;
@@ -32,26 +26,17 @@ namespace TheTVDBSharp.Services
             }
             catch (XmlException e)
             {
-                this.logger.Log("Actors collection string cannot be parsed into a xml document.", LogLevel.Error, e);
-                return null;
+                throw new ParseException("Actors collection string cannot be parsed into a xml document.", e);
             }
 
             // If Actors element is missing return null
             var actorsXml = doc.Element("Actors");
-            if (actorsXml == null)
-            {
-                this.logger.Log("Error while parsing actors xml document. Xml Element 'Actors' is missing.", LogLevel.Error);
-                return null;
-            }
+            if (actorsXml == null) throw new ParseException("Error while parsing actors xml document. Xml Element 'Actors' is missing.");
 
-            var actorList = new List<Actor>();
-            foreach (var actorXml in actorsXml.Elements("Actor"))
-            {
-                var actor = Parse(actorXml);
-                if (actor != null) actorList.Add(actor);
-            }
-
-            return actorList;
+            return actorsXml.Elements("Actor")
+                .Select(Parse)
+                .Where(actor => actor != null)
+                .ToList();
         }
 
         /// <summary>
@@ -61,25 +46,18 @@ namespace TheTVDBSharp.Services
         /// <returns>Returns parsed actor or null if xml is not valid</returns>
         public Actor Parse(XElement actorXml)
         {
-            if (actorXml == null)
-            {
-                throw new ArgumentNullException("actorXml", "Actor xml cannot be null");
-            }
+            if (actorXml == null) throw new ArgumentNullException("actorXml");
 
-            // If actors has no id skip parsing and return null
+            // If actor has no id throw ParseException
             var id = actorXml.ElementAsUInt("id");
-            if (!id.HasValue)
-            {
-                this.logger.Log("Error while parsing an actor xml element. Id is missing.", LogLevel.Error);
-                return null;
-            }
+            if (!id.HasValue) throw new ParseException("Error while parsing an actor xml element. Id is missing.");
 
             return new Actor(id.Value)
             {
                 ImageRemotePath = actorXml.ElementAsString("Image"),
                 Name = actorXml.ElementAsString("Name"),
                 Role = actorXml.ElementAsString("Role"),
-                SortOrder = actorXml.ElementAsInt("SortOrder").Value
+                SortOrder = actorXml.ElementAsInt("SortOrder").GetValueOrDefault()
             };
         }
     }

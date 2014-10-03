@@ -2,30 +2,14 @@
 {
     public class ProxyConfiguration : IProxyConfiguration
     {
-        #region Properties
+        public string ApiKey { get; private set; }
 
-        public string ApiKey
+        public string BaseUrl { get; private set; }
+
+        public ProxyConfiguration(string apiKey, string baseUrl)
         {
-            get;
-            private set;
+            ApiKey = apiKey;
+            BaseUrl = baseUrl;
         }
-
-        public string BaseUrl
-        {
-            get;
-            private set;
-        }
-
-        #endregion
-
-        #region Constructor
-
-        public ProxyConfiguration(string apiKey, string baseURL)
-        {
-            this.ApiKey = apiKey;
-            this.BaseUrl = baseURL;
-        }
-
-        #endregion
     }
 }

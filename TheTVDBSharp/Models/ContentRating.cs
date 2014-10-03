@@ -8,32 +8,32 @@
         /// <summary>
         ///     Not suitable for children under 14.
         /// </summary>
-        TV14,
+        Tv14,
 
         /// <summary>
         ///     This program contains material that parents may find unsuitable for younger children.
         /// </summary>
-        TVPG,
+        Tvpg,
 
         /// <summary>
         ///     This program is designed to be appropriate for all children.
         /// </summary>
-        TVY,
+        Tvy,
 
         /// <summary>
         ///     This program is designed for children age 7 and above.
         /// </summary>
-        TVY7,
+        Tvy7,
 
         /// <summary>
         ///     Most parents would find this program suitable for all ages.
         /// </summary>
-        TVG,
+        Tvg,
 
         /// <summary>
         ///     This program is specifically designed to be viewed by adults and therefore may be unsuitable for children under 17.
         /// </summary>
-        TVMA
+        Tvma
     }
 
     public static class ContentRatingExtension
@@ -43,22 +43,22 @@
             switch (rating)
             {
                 case "TV-14":
-                    return ContentRating.TV14;
+                    return ContentRating.Tv14;
 
                 case "TV-PG":
-                    return ContentRating.TVPG;
+                    return ContentRating.Tvpg;
 
                 case "TV-Y":
-                    return ContentRating.TVY;
+                    return ContentRating.Tvy;
 
                 case "TV-Y7":
-                    return ContentRating.TVY7;
+                    return ContentRating.Tvy7;
 
                 case "TV-G":
-                    return ContentRating.TVG;
+                    return ContentRating.Tvg;
 
                 case "TV-MA":
-                    return ContentRating.TVMA;
+                    return ContentRating.Tvma;
 
                 default:
                     return null;

@@ -5,14 +5,14 @@ namespace SimpleSearchConsole
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             // Create new TheTVDB manager which allows to perform api calls. Enter your api key here.
             // If the api key is not valid the server returns a 404 (.... crap ....) so I was not able
             // to create a unique exception for that case. TheTVDB triggers 404 also in many other cases.
             // So you get an aggregate exception with a more understandable INNER Exception (404).
 
-            var tvdb = new TheTVDBManager(GlobalConfiguration.API_KEY);  // <--- API KEY required
+            var tvdb = new TheTvdbManager(GlobalConfiguration.ApiKey);  // <--- API KEY required
 
             while (true)
             {
@@ -46,6 +46,7 @@ namespace SimpleSearchConsole
                 Console.ReadLine();
                 Console.Clear();
             }
+// ReSharper disable once FunctionNeverReturns
         }
     }
 }

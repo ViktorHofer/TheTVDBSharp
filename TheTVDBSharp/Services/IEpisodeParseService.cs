@@ -1,5 +1,4 @@
-﻿
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using TheTVDBSharp.Models;
 
 namespace TheTVDBSharp.Services

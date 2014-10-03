@@ -1,9 +1,7 @@
-﻿using TheTVDBSharp.Services;
-
-namespace SimpleSearchConsole
+﻿namespace SimpleSearchConsole
 {
     public static partial class GlobalConfiguration
     {
-        public static readonly string API_KEY = "";
+        public static readonly string ApiKey = "";
     }
 }

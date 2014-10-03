@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Xml.Linq;
 using TheTVDBSharp.Services;
 
 namespace TheTVDBSharp.Testing.Services
@@ -7,13 +6,13 @@ namespace TheTVDBSharp.Testing.Services
     [TestClass]
     public class EpisodeParseServiceTest
     {
-        private readonly IEpisodeParseService episodeParseService = new EpisodeParseService(GlobalConfiguration.Logger);
+        private readonly IEpisodeParseService _episodeParseService = new EpisodeParseService();
 
         [TestMethod]
         public void Parse_Episode_306213_Test()
         {            
-            var sampleEpisodeRaw = SampleDataHelper.Open(SampleDataHelper.SampleData.Episode_306213);
-            var episode = episodeParseService.Parse(sampleEpisodeRaw);
+            var sampleEpisodeRaw = SampleDataHelper.Open(SampleDataHelper.SampleData.Episode306213);
+            var episode = _episodeParseService.Parse(sampleEpisodeRaw);
             
             Assert.IsNotNull(episode);
             Assert.AreEqual((uint)306213, episode.Id);

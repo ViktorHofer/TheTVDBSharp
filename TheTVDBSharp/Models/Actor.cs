@@ -4,11 +4,11 @@ namespace TheTVDBSharp.Models
 {
     public class Actor : IEquatable<Actor>
     {
-        private readonly uint id;
+        private readonly uint _id;
 
         public uint Id
         {
-            get { return this.id; }
+            get { return _id; }
         }
 
         public string ImageRemotePath { get; set; }
@@ -21,22 +21,22 @@ namespace TheTVDBSharp.Models
 
         public Actor(uint id)
         {
-            this.id = id;
+            _id = id;
         }
 
         public bool Equals(Actor other)
         {
-            return other != null && other.id == this.id;
+            return other != null && other._id == _id;
         }
 
         public override bool Equals(object obj)
         {
-            return this.Equals(obj as Actor);
+            return Equals(obj as Actor);
         }
 
         public override int GetHashCode()
         {
-            return this.id.GetHashCode();
+            return _id.GetHashCode();
         }
     }
 }

@@ -6,8 +6,8 @@ namespace TheTVDBSharp.Services
 {
     public class UpdateServiceProxy : ProxyBase, IUpdateService
     {
-        private const string updateCompressedUrlFormat = "{0}/api/{1}/updates/updates_{2}.zip";
-        private const string updateUncompressedUrlFormat = "{0}/api/{1}/updates/updates_{2}.xml";
+        private const string UpdateCompressedUrlFormat = "{0}/api/{1}/updates/updates_{2}.zip";
+        private const string UpdateUncompressedUrlFormat = "{0}/api/{1}/updates/updates_{2}.xml";
 
         public UpdateServiceProxy(IProxyConfiguration config)
             : base(config)
@@ -16,19 +16,19 @@ namespace TheTVDBSharp.Services
 
         public async Task<Stream> Retrieve(Interval interval)
         {
-            var url = string.Format(updateCompressedUrlFormat, base.proxyConfiguration.BaseUrl, base.proxyConfiguration.ApiKey, interval.ToApiString());
+            var url = string.Format(UpdateCompressedUrlFormat, ProxyConfiguration.BaseUrl, ProxyConfiguration.ApiKey, interval.ToApiString());
 
-            var response = await base.GetAsync(url);
-            response.EnsureSuccessStatusCode();
+            var response = await GetAsync(url);
+            
             return await response.Content.ReadAsStreamAsync();
         }
 
         public async Task<string> RetrieveUncompressed(Interval interval)
         {
-            var url = string.Format(updateUncompressedUrlFormat, base.proxyConfiguration.BaseUrl, base.proxyConfiguration.ApiKey, interval.ToApiString());
+            var url = string.Format(UpdateUncompressedUrlFormat, ProxyConfiguration.BaseUrl, ProxyConfiguration.ApiKey, interval.ToApiString());
 
-            var response = await base.GetAsync(url);
-            response.EnsureSuccessStatusCode();
+            var response = await GetAsync(url);
+            
             return await response.Content.ReadAsStringAsync();
         }
     }

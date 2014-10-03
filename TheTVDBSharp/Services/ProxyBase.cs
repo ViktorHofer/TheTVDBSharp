@@ -5,11 +5,11 @@ namespace TheTVDBSharp.Services
 {
     public abstract class ProxyBase
     {
-        protected readonly IProxyConfiguration proxyConfiguration;
+        protected readonly IProxyConfiguration ProxyConfiguration;
 
-        public ProxyBase(IProxyConfiguration proxyConfiguration)
+        protected ProxyBase(IProxyConfiguration proxyConfiguration)
         {
-            this.proxyConfiguration = proxyConfiguration;
+            ProxyConfiguration = proxyConfiguration;
         }
 
         protected async Task<HttpResponseMessage> GetAsync(string url)
@@ -20,6 +20,7 @@ namespace TheTVDBSharp.Services
                 {
                     var response = await client.GetAsync(url, HttpCompletionOption.ResponseContentRead);
                     if (!response.IsSuccessStatusCode) throw new BadResponseException(response.StatusCode);
+
                     return response;
                 }
             }

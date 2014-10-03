@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Xml.Linq;
 
 namespace TheTVDBSharp.Testing
 {
@@ -7,24 +6,24 @@ namespace TheTVDBSharp.Testing
     {
         internal enum SampleData
         {
-            Episode_306213,
-            Search_Scrubs,
-            Series_76156,
-            SeriesFull_76156,
-            SeriesFull_76156_Meta,
-            SeriesFull_76156_Banners,
-            SeriesFull_76156_Actors,
-            Updates_Day
+            Episode306213,
+            SearchScrubs,
+            Series76156,
+            SeriesFull76156,
+            SeriesFull76156Meta,
+            SeriesFull76156Banners,
+            SeriesFull76156Actors,
+            UpdatesDay
         }
 
         internal static string Open(SampleData sampleData)
         {
-            return System.IO.File.ReadAllText("SampleData/" + sampleData.ToString() + ".xml");
+            return File.ReadAllText("SampleData/" + sampleData.ToString() + ".xml");
         }
 
         internal static FileStream OpenStream(SampleData sampleData)
         {
-            return System.IO.File.OpenRead("SampleData/" + sampleData.ToString() + ".zip");
+            return File.OpenRead("SampleData/" + sampleData.ToString() + ".zip");
         }
     }
 }

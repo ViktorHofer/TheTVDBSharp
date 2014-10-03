@@ -8,13 +8,13 @@ namespace TheTVDBSharp.Testing.Services
     [TestClass]
     public class BannerParseServiceTest
     {
-        private readonly IBannerParseService bannerParseService = new BannerParseService(GlobalConfiguration.Logger);
+        private readonly IBannerParseService _bannerParseService = new BannerParseService();
 
         [TestMethod]
         public void Parse_Banners_76156_Test()
         {
-            var bannerCollectionRaw = SampleDataHelper.Open(SampleDataHelper.SampleData.SeriesFull_76156_Banners);
-            var banners = bannerParseService.Parse(bannerCollectionRaw);
+            var bannerCollectionRaw = SampleDataHelper.Open(SampleDataHelper.SampleData.SeriesFull76156Banners);
+            var banners = _bannerParseService.Parse(bannerCollectionRaw);
 
             Assert.IsNotNull(banners);
             Assert.AreEqual(140, banners.Count);

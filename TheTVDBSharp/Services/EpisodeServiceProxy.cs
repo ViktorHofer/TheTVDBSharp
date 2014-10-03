@@ -5,7 +5,7 @@ namespace TheTVDBSharp.Services
 {
     public class EpisodeServiceProxy : ProxyBase, IEpisodeService
     {
-        private const string episodeUrlFormat = "{0}/api/{1}/episodes/{2}/{3}.xml";
+        private const string EpisodeUrlFormat = "{0}/api/{1}/episodes/{2}/{3}.xml";
 
         public EpisodeServiceProxy(IProxyConfiguration config)
             : base(config)
@@ -14,9 +14,10 @@ namespace TheTVDBSharp.Services
 
         public async Task<string> Retrieve(uint episodeId, Language language)
         {
-            var url = string.Format(episodeUrlFormat, base.proxyConfiguration.BaseUrl, base.proxyConfiguration.ApiKey, episodeId, language.ToShort());
+            var url = string.Format(EpisodeUrlFormat, ProxyConfiguration.BaseUrl, ProxyConfiguration.ApiKey, episodeId, language.ToShort());
             
-            var response = await base.GetAsync(url);
+            var response = await GetAsync(url);
+
             return await response.Content.ReadAsStringAsync();
         }
     }
