@@ -10,7 +10,6 @@ namespace SimpleSearchConsole
             // Create new TheTVDB manager which allows to perform api calls. Enter your api key here.
             // If the api key is not valid the server returns a 404 (.... crap ....) so I was not able
             // to create a unique exception for that case. TheTVDB triggers 404 also in many other cases.
-            // So you get an aggregate exception with a more understandable INNER Exception (404).
 
             var tvdb = new TheTvdbManager(GlobalConfiguration.ApiKey);  // <--- API KEY required
 
@@ -26,7 +25,7 @@ namespace SimpleSearchConsole
                 Console.WriteLine();
 
                 // Search for a series by name and with a specified language.
-                var searchResult = tvdb.SearchSeries(searchQuery, TheTVDBSharp.Models.Language.English).Result;
+                var searchResult = tvdb.SearchSeries(searchQuery, TheTVDBSharp.Models.Language.English).GetAwaiter().GetResult();
 
                 Console.WriteLine("{0} shows found... Downloading each show", searchResult.Count);
                 Console.WriteLine();
@@ -36,7 +35,7 @@ namespace SimpleSearchConsole
                 {
                     // To get more details of a series (not just metadata) like all episodes or banners 
                     // or actors call GetSeries(seriesId, language)
-                    var fullSeries = tvdb.GetSeries(series.Id, TheTVDBSharp.Models.Language.English).Result;
+                    var fullSeries = tvdb.GetSeries(series.Id, TheTVDBSharp.Models.Language.English).GetAwaiter().GetResult();
 
                     Console.WriteLine("- {0} ({1} Episodes)", series.Title, fullSeries.Episodes.Count);
                 }
@@ -46,7 +45,6 @@ namespace SimpleSearchConsole
                 Console.ReadLine();
                 Console.Clear();
             }
-// ReSharper disable once FunctionNeverReturns
         }
     }
 }

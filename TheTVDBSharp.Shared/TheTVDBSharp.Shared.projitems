@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>401afaf7-dbdd-45b3-b9f4-50557f144829</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>TheTVDBSharp</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\DateTimeExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\StreamExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\StringExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\XElementExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ITheTVDBManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Actor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BadResponseException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Banner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BannerUpdate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ContentRating.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Episode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\EpisodeUpdate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\FanartBanner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Frequency.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Interval.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Language.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ParseException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PosterBanner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SeasonBanner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Series.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SeriesBanner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SeriesUpdate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ServerNotAvailableException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Status.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\UpdateContainer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ActorParseService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\BannerParseService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\BannerServiceProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\EpisodeParseService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\EpisodeServiceProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Libs\IActorParseService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Libs\IBannerParseService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Libs\IBannerService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Libs\IEpisodeParseService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Libs\IEpisodeService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Libs\IProxyConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Libs\ISeriesParseService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Libs\ISeriesService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Libs\IUpdateParseService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Libs\IUpdateService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ProxyBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ProxyConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\SeriesParseService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\SeriesServiceProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\UpdateParseService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\UpdateServiceProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TheTVDBManager.cs" />
+  </ItemGroup>
+</Project>
