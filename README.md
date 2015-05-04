@@ -1,7 +1,8 @@
-TVDBSharp
+TheTVDBSharp
 =========
 
-**Nuget Package: https://www.nuget.org/packages/TheTVDBSharp/**
+**Nuget Package for NET45,W8x,WP8x: https://www.nuget.org/packages/TheTVDBSharp/**
+**Nuget Package for Windows 10 (UAP): https://www.nuget.org/packages/TheTVDBSharp.UAP/1.0.0**
 
 **A C# wrapper for the TVDB API.**
 
@@ -25,7 +26,7 @@ You don't have to do this, but some people might want to read up on the, althoug
 Easiest way is to add nuget package via Nuget Package Manager in Visual Studio. Link at the top.
 
 **4) Use it!**  
-You can now use TVDBSharp in your own project.
+You can now use TheTVDBSharp in your own project.
 
 A simple example:
 

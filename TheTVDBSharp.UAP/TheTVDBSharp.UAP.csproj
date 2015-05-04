@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TheTVDBSharp.UAP.nuspec" />
   </ItemGroup>
   <Import Project="..\TheTVDBSharp.Shared\TheTVDBSharp.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
