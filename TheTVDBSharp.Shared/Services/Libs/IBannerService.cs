@@ -4,9 +4,9 @@ namespace TheTVDBSharp.Services.Libs
 {
     public interface IBannerService
     {
-#if PORTABLE
+#if WINDOWS_PORTABLE
         Task<System.IO.Stream> Retrieve(string remotePath);
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
         Task<Windows.Storage.Streams.IInputStream> Retrieve(string remotePath);
 #endif
     }

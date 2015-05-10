@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-#if WINDOWS_UAP
+#if WINDOWS_RUNTIME
 using Windows.UI;
 #endif
 

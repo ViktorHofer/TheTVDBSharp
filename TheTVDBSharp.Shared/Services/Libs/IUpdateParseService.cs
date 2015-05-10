@@ -4,9 +4,9 @@ namespace TheTVDBSharp.Services.Libs
 {
     public interface IUpdateParseService
     {
-#if PORTABLE
+#if WINDOWS_PORTABLE
         UpdateContainer Parse(System.IO.Stream updateContainerStream, Interval interval);
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
         UpdateContainer Parse(Windows.Storage.Streams.IInputStream updateContainerStream, Interval interval);
 #endif
 

@@ -122,9 +122,9 @@ namespace TheTVDBSharp
         /// <param name="remotePath">The remote path of the banner which can be 
         /// found in the BannerBase or in the BannerUpdate model.</param>
         /// <returns>Returns the banner as byte array.</returns>
-#if PORTABLE
+#if WINDOWS_PORTABLE
         public async Task<System.IO.Stream> GetBanner(string remotePath)
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
         public async Task<Windows.Storage.Streams.IInputStream> GetBanner(string remotePath)
 #endif
         {

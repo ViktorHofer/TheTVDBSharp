@@ -14,9 +14,9 @@ namespace TheTVDBSharp
 
         Task<UpdateContainer> GetUpdates(Interval interval, bool compression = true);
 
-#if PORTABLE
+#if WINDOWS_PORTABLE
         Task<System.IO.Stream> GetBanner(string remotePath);
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
         Task<Windows.Storage.Streams.IInputStream> GetBanner(string remotePath);
 #endif
     }

@@ -16,9 +16,9 @@ namespace TheTVDBSharp.Services
         {
         }
 
-#if PORTABLE
+#if WINDOWS_PORTABLE
         public async Task<System.IO.Stream> RetrieveFull(uint showId, Language language)
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
         public async Task<Windows.Storage.Streams.IInputStream> RetrieveFull(uint showId, Language language)
 #endif
         {
@@ -30,9 +30,9 @@ namespace TheTVDBSharp.Services
 
             var response = await GetAsync(url);
 
-#if PORTABLE
+#if WINDOWS_PORTABLE
             return await response.Content.ReadAsStreamAsync();
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
             return await response.Content.ReadAsInputStreamAsync();
 #endif
         }

@@ -15,9 +15,9 @@ namespace TheTVDBSharp.Services
         {
         }
 
-#if PORTABLE
+#if WINDOWS_PORTABLE
         public async Task<System.IO.Stream> Retrieve(Interval interval)
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
         public async Task<Windows.Storage.Streams.IInputStream> Retrieve(Interval interval)
 #endif
         {
@@ -28,9 +28,9 @@ namespace TheTVDBSharp.Services
 
             var response = await GetAsync(url);
 
-#if PORTABLE
+#if WINDOWS_PORTABLE
             return await response.Content.ReadAsStreamAsync();
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
             return await response.Content.ReadAsInputStreamAsync();
 #endif
         }

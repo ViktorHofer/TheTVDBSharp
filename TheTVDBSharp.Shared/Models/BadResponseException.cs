@@ -1,7 +1,7 @@
 ﻿using System;
-#if PORTABLE
+#if WINDOWS_PORTABLE
 using System.Net;
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
 using Windows.Web.Http;
 #endif
 

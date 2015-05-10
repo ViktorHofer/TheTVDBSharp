@@ -12,17 +12,17 @@ namespace TheTVDBSharp.Services
 {
     public class UpdateParseService : IUpdateParseService
     {
-#if PORTABLE
+#if WINDOWS_PORTABLE
         public UpdateContainer Parse(System.IO.Stream updateContainerStream, Interval interval)
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
         public UpdateContainer Parse(Windows.Storage.Streams.IInputStream updateContainerStream, Interval interval)
 #endif
         {
             if (updateContainerStream == null) throw new ArgumentNullException("updateContainerStream");
 
-#if PORTABLE
+#if WINDOWS_PORTABLE
             using (var archive = new ZipArchive(updateContainerStream, ZipArchiveMode.Read))
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
             using (var archive = new ZipArchive(updateContainerStream.AsStreamForRead(), ZipArchiveMode.Read))
 #endif
             {

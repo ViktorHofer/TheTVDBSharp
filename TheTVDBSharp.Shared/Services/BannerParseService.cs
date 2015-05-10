@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using TheTVDBSharp.Common;
 using TheTVDBSharp.Models;
 using TheTVDBSharp.Services.Libs;
-#if WINDOWS_UAP
+#if WINDOWS_RUNTIME
 using Windows.UI;
 #endif
 

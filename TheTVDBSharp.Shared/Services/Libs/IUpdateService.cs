@@ -5,9 +5,9 @@ namespace TheTVDBSharp.Services.Libs
 {
     public interface IUpdateService
     {
-#if PORTABLE
+#if WINDOWS_PORTABLE
         Task<System.IO.Stream> Retrieve(Interval interval);
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
         Task<Windows.Storage.Streams.IInputStream> Retrieve(Interval interval);
 #endif
 

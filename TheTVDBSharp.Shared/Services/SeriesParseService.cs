@@ -123,9 +123,9 @@ namespace TheTVDBSharp.Services
         /// <param name="fullSeriesCompressedStream">Complete series zip compressed stream</param>
         /// <param name="language">Series language</param>
         /// <returns>Return the parsed complete series or null if stream or xml is not valid</returns>
-#if PORTABLE
+#if WINDOWS_PORTABLE
         public async Task<Series> ParseFull(System.IO.Stream fullSeriesCompressedStream, Language language)
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
         public async Task<Series> ParseFull(Windows.Storage.Streams.IInputStream fullSeriesCompressedStream, Language language)
 #endif
         {
@@ -135,9 +135,9 @@ namespace TheTVDBSharp.Services
             string actorsRaw;
             string bannersRaw;
 
-#if PORTABLE
+#if WINDOWS_PORTABLE
             using (var archive = new ZipArchive(fullSeriesCompressedStream, ZipArchiveMode.Read))
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
             using (var archive = new ZipArchive(fullSeriesCompressedStream.AsStreamForRead(), ZipArchiveMode.Read))
 #endif
             {

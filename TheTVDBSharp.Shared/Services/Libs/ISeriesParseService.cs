@@ -11,9 +11,9 @@ namespace TheTVDBSharp.Services.Libs
 
         Series Parse(XElement seriesXml, bool isSearchElement = false);
 
-#if PORTABLE
+#if WINDOWS_PORTABLE
         Task<Series> ParseFull(System.IO.Stream fullSeriesStream, Language language);
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
         Task<Series> ParseFull(Windows.Storage.Streams.IInputStream fullSeriesStream, Language language);
 #endif
 

@@ -10,9 +10,9 @@ namespace TheTVDBSharp.Services.Libs
         /// </summary>
         /// <param name="showId">Id of the show you wish to lookup.</param>
         /// <param name="language">ISO 639-1 language code of the episode</param>
-#if PORTABLE
+#if WINDOWS_PORTABLE
         Task<System.IO.Stream> RetrieveFull(uint showId, Language language);
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
         Task<Windows.Storage.Streams.IInputStream> RetrieveFull(uint showId, Language language);
 #endif
 

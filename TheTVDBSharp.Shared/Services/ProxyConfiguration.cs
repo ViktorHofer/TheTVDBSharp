@@ -9,7 +9,7 @@ namespace TheTVDBSharp.Services
 
         public string BaseUrl { get; }
 
-#if PORTABLE
+#if WINDOWS_PORTABLE
         public TimeSpan? Timeout { get; set; }
 #endif
 

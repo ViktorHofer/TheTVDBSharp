@@ -1,7 +1,7 @@
 ﻿using System;
-#if PORTABLE
+#if WINDOWS_PORTABLE
 using System.Net.Http;
-#elif WINDOWS_UAP
+#elif WINDOWS_RUNTIME
 using Windows.Web.Http;
 #endif
 using System.Threading.Tasks;
@@ -30,7 +30,7 @@ namespace TheTVDBSharp.Services
 
                 using (var client = new HttpClient())
                 {
-#if PORTABLE
+#if WINDOWS_PORTABLE
                     // Setting timeout for httpclient on portable architecture. 
                     // UAP supports timeout configuration via System.Threading.Task
                     if (ProxyConfiguration.Timeout.HasValue)

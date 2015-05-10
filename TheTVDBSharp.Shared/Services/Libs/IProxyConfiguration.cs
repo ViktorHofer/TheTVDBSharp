@@ -13,7 +13,7 @@ namespace TheTVDBSharp.Services.Libs
         /// </summary>
         string BaseUrl { get; }
 
-#if PORTABLE
+#if WINDOWS_PORTABLE
         System.TimeSpan? Timeout { get; set; }
 #endif
     }
