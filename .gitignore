@@ -16,6 +16,7 @@ build/
 [Oo]bj/
 
 *.Secret.cs
+.nudpl/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
@@ -156,5 +157,3 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
-*.nupkg
-*.nuspec
