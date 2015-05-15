@@ -1,17 +1,12 @@
 ﻿using System;
-using TheTVDBSharp;
 
-namespace SimpleSearchConsole
+namespace TheTVDBSharp.Samples.SimpleSearch
 {
     class Program
     {
         static void Main()
         {
-            // Create new TheTVDB manager which allows to perform api calls. Enter your api key here.
-            // If the api key is not valid the server returns a 404 (.... crap ....) so I was not able
-            // to create a unique exception for that case. TheTVDB triggers 404 also in many other cases.
-
-            var tvdb = new TheTvdbManager(GlobalConfiguration.ApiKey);  // <--- API KEY required
+            var tvdb = GlobalConfiguration.Manager;
 
             while (true)
             {

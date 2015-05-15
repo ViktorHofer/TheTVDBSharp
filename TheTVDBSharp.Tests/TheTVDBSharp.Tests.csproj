@@ -116,7 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalConfiguration.cs" />
-    <Compile Include="GlobalConfigurationLocal.cs" />
+    <Compile Include="GlobalConfiguration.Secret.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleDataHelper.cs" />
     <Compile Include="Services\ActorParseServiceTest.cs" />

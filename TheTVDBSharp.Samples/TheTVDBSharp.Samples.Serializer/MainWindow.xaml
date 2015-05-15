@@ -1,0 +1,48 @@
+﻿<Window x:Class="TheTVDBSharp.Samples.Serializer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TheTVDBSharp.Samples.Serializer"
+        xmlns:models="clr-namespace:TheTVDBSharp.Models;assembly=TheTVDBSharp.Portable"
+        mc:Ignorable="d"
+        Title="TheTVDB Serializer" Height="350" Width="525">
+    <Window.DataContext>
+        <local:MainWindowViewModel />
+    </Window.DataContext>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Text="Series name: " />
+            <TextBox Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="10,0" />
+            <Button Grid.Column="2" Content="Search" Command="{Binding SearchCommand, Mode=OneWay}" />
+        </Grid>
+        
+        <ListBox Grid.Row="1" Margin="0,5" ItemsSource="{Binding SeriesCollection, Mode=OneWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="models:Series">
+                    <TextBlock>
+                        <Run Text="{Binding Title, Mode=OneWay}" />
+                        (<Run Text="{Binding Episodes.Count, Mode=OneWay}" /> episodes)
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Clear" Command="{Binding ClearCommand, Mode=OneWay}" />
+            <Button Content="Serialize" Command="{Binding SerializeCommand, Mode=OneWay}" Margin="10,0,0,0" />
+        </StackPanel>
+    </Grid>
+</Window>
