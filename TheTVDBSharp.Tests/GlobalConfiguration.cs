@@ -1,5 +1,5 @@
 ﻿using System;
-using TheTVDBSharp.Services;
+using TheTVDBSharp.Models;
 
 namespace TheTVDBSharp.Tests
 {
@@ -8,11 +8,11 @@ namespace TheTVDBSharp.Tests
         public static readonly string ApiKey = "";
         public static readonly string BaseUrl = "http://thetvdb.com";
 
-        public static ProxyConfiguration ApiConfiguration
+        public static IApiConfiguration ApiConfiguration
         {
             get
             {
-                return new ProxyConfiguration(ApiKey, BaseUrl);
+                return new ApiConfiguration(ApiKey, BaseUrl);
             }
         }
 

@@ -11,8 +11,8 @@ namespace TheTVDBSharp.Services
         private const string SeriesUrlFormat = "{0}/api/{1}/series/{2}/all/{3}.xml";
         private const string SearchSeriesUrlFormat = "{0}/api/GetSeries.php?seriesname={1}&language={2}";
 
-        public SeriesServiceProxy(IProxyConfiguration config)
-            : base(config)
+        public SeriesServiceProxy(IApiConfiguration apiConfiguration)
+            : base(apiConfiguration)
         {
         }
 

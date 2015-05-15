@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using TheTVDBSharp.Models;
 using TheTVDBSharp.Services.Libs;
 
 namespace TheTVDBSharp.Services
@@ -8,8 +9,8 @@ namespace TheTVDBSharp.Services
     {
         private const string BannerUrlFormat = "{0}/banners/{1}";
 
-        public BannerServiceProxy(IProxyConfiguration proxyConfiguration) 
-            : base(proxyConfiguration)
+        public BannerServiceProxy(IApiConfiguration apiConfiguration) 
+            : base(apiConfiguration)
         {
         }
 

@@ -22,17 +22,15 @@ namespace TheTVDBSharp
         private readonly IUpdateParseService _updateParseService;
 
         /// <summary>
-        /// Creates a new instance with the provided API key and a base api url
+        /// Creates a new instance with the provided api configuration
         /// </summary>
-        /// <param name="apiKey">The API key provided by TVDB</param>
-        /// <param name="baseUrl">The API base url</param>
-        public TheTvdbManager(string apiKey, string baseUrl = "http://thetvdb.com")
+        /// <param name="apiConfiguration">The API configuration</param>
+        public TheTvdbManager(IApiConfiguration apiConfiguration)
         {
-            if (apiKey == null) throw new ArgumentNullException(nameof(apiKey));
-            if (baseUrl == null) throw new ArgumentNullException(nameof(baseUrl));
-
-            // Api Configuration
-            var apiConfiguration = new ProxyConfiguration(apiKey, baseUrl);
+            if (apiConfiguration == null)
+                throw new ArgumentNullException(nameof(apiConfiguration));
+            if (string.IsNullOrWhiteSpace(apiConfiguration.BaseUrl))
+                throw new ArgumentOutOfRangeException(nameof(apiConfiguration), "Base url must be set");
 
             // Proxy Services
             _seriesService = new SeriesServiceProxy(apiConfiguration);
@@ -46,6 +44,16 @@ namespace TheTVDBSharp
             _episodeParseService = new EpisodeParseService();
             _seriesParseService = new SeriesParseService(actorParseService, bannerParseService, _episodeParseService);
             _updateParseService = new UpdateParseService();
+        }
+
+        /// <summary>
+        /// Creates a new instance with the provided API key and a base api url
+        /// </summary>
+        /// <param name="apiKey">The API key provided by TVDB</param>
+        /// <param name="baseUrl">The API base url</param>
+        public TheTvdbManager(string apiKey, string baseUrl = "http://thetvdb.com")
+            : this(new ApiConfiguration(apiKey, baseUrl))
+        {
         }
 
         /// <summary>

@@ -9,8 +9,8 @@ namespace TheTVDBSharp.Services
     {
         private const string EpisodeUrlFormat = "{0}/api/{1}/episodes/{2}/{3}.xml";
 
-        public EpisodeServiceProxy(IProxyConfiguration config)
-            : base(config)
+        public EpisodeServiceProxy(IApiConfiguration apiConfiguration)
+            : base(apiConfiguration)
         {
         }
 

@@ -1,7 +1,7 @@
 ﻿
-namespace TheTVDBSharp.Services.Libs
+namespace TheTVDBSharp.Models
 {
-    public interface IProxyConfiguration
+    public interface IApiConfiguration
     {
         /// <summary>
         ///     The API key provided by TVDB.

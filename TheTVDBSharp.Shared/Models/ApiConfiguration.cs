@@ -1,9 +1,8 @@
 ﻿using System;
-using TheTVDBSharp.Services.Libs;
 
-namespace TheTVDBSharp.Services
+namespace TheTVDBSharp.Models
 {
-    public class ProxyConfiguration : IProxyConfiguration
+    public class ApiConfiguration : IApiConfiguration
     {
         public string ApiKey { get; }
 
@@ -13,11 +12,11 @@ namespace TheTVDBSharp.Services
         public TimeSpan? Timeout { get; set; }
 #endif
 
-        public ProxyConfiguration(string apiKey, string baseUrl)
+        public ApiConfiguration(string apiKey, string baseUrl = "http://thetvdb.com")
         {
-            if (apiKey == null) throw new ArgumentNullException(nameof(apiKey));
             if (baseUrl == null) throw new ArgumentNullException(nameof(baseUrl));
 
+            // ApiKey can be null if only search is performed --> no api key required
             ApiKey = apiKey;
             BaseUrl = baseUrl;
         }

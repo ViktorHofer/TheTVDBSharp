@@ -10,8 +10,8 @@ namespace TheTVDBSharp.Services
         private const string UpdateCompressedUrlFormat = "{0}/api/{1}/updates/updates_{2}.zip";
         private const string UpdateUncompressedUrlFormat = "{0}/api/{1}/updates/updates_{2}.xml";
 
-        public UpdateServiceProxy(IProxyConfiguration config)
-            : base(config)
+        public UpdateServiceProxy(IApiConfiguration apiConfiguration)
+            : base(apiConfiguration)
         {
         }
 

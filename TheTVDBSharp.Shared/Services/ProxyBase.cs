@@ -12,12 +12,12 @@ namespace TheTVDBSharp.Services
 {
     public abstract class ProxyBase
     {
-        protected IProxyConfiguration ProxyConfiguration { get; }
+        protected IApiConfiguration ProxyConfiguration { get; }
 
-        protected ProxyBase(IProxyConfiguration proxyConfiguration)
+        protected ProxyBase(IApiConfiguration apiConfiguration)
         {
-            if (proxyConfiguration == null) throw new ArgumentNullException(nameof(proxyConfiguration));
-            ProxyConfiguration = proxyConfiguration;
+            if (apiConfiguration == null) throw new ArgumentNullException(nameof(apiConfiguration));
+            ProxyConfiguration = apiConfiguration;
         }
 
         protected async Task<HttpResponseMessage> GetAsync(string url)
