@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
-using Windows.Storage;
-using Windows.Storage.Streams;
+using System.IO;
 
 namespace TheTVDBSharp.Tests
 {
@@ -19,20 +17,15 @@ namespace TheTVDBSharp.Tests
             UpdatesDay
         }
 
-        internal static async Task<string> GetTextAsync(SampleData sampleData)
+        internal static string GetText(SampleData sampleData)
         {
-            var folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("SampleData");
-            var file = await folder.GetFileAsync(sampleData.ToString() + ".xml");
-
-            return await FileIO.ReadTextAsync(file);
+            
+            return System.IO.File.ReadAllText($"{AppContext.BaseDirectory}/SampleData/{sampleData.ToString()}.xml");
         }
 
-        internal static async Task<IInputStream> GetStreamAsync(SampleData sampleData)
+        internal static Stream GetStream(SampleData sampleData)
         {
-            var folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("SampleData");
-            var file = await folder.GetFileAsync(sampleData.ToString() + ".zip");
-
-            return await file.OpenReadAsync();
+            return System.IO.File.OpenRead($"{AppContext.BaseDirectory}/SampleData/{sampleData.ToString()}.zip");
         }
     }
 }

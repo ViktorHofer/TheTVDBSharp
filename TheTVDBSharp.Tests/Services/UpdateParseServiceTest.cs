@@ -1,27 +1,25 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System;
-using System.Threading.Tasks;
+﻿using System;
 using TheTVDBSharp.Services;
 using TheTVDBSharp.Services.Libs;
+using Xunit;
 
 namespace TheTVDBSharp.Tests.Services
 {
-    [TestClass]
     public class UpdateParseServiceTest
     {
         private readonly IUpdateParseService _updateParseService = new UpdateParseService();
 
-        [TestMethod]
-        public async Task Parse_Update_Day_Test()
+        [Fact]
+        public void Parse_Update_Day_Test()
         {
-            var updateContainerStream = await SampleDataHelper.GetStreamAsync(SampleDataHelper.SampleData.UpdatesDay);
+            var updateContainerStream = SampleDataHelper.GetStream(SampleDataHelper.SampleData.UpdatesDay);
             var updateContainer = _updateParseService.Parse(updateContainerStream, Models.Interval.Day);
 
-            Assert.IsNotNull(updateContainer);
-            Assert.AreEqual(141, updateContainer.BannerCollection.Count);
-            Assert.AreEqual(3468, updateContainer.EpisodeCollection.Count);
-            Assert.AreEqual(591, updateContainer.SeriesCollection.Count);
-            Assert.AreEqual(new DateTime(2014, 9, 9, 17, 30, 1), updateContainer.LastUpdated);
+            Assert.NotNull(updateContainer);
+            Assert.Equal(141, updateContainer.BannerCollection.Count);
+            Assert.Equal(3468, updateContainer.EpisodeCollection.Count);
+            Assert.Equal(591, updateContainer.SeriesCollection.Count);
+            Assert.Equal(new DateTime(2014, 9, 9, 17, 30, 1), updateContainer.LastUpdated);
         }
     }
 }

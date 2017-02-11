@@ -1,20 +1,19 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TheTVDBSharp.Services;
 using TheTVDBSharp.Services.Libs;
+using Xunit;
 
 namespace TheTVDBSharp.Tests.Services
 {
-    [TestClass]
     public class EpisodeServiceProxyTest
     {
         readonly IEpisodeService _episodeService = new EpisodeServiceProxy(GlobalConfiguration.ApiConfiguration);
 
-        [TestMethod]
+        [Fact]
         public async Task Retrieve_Episode_306213_Test()
         {
             var realEpisodeRaw = await _episodeService.Retrieve(306213, Models.Language.English);
-            Assert.IsNotNull(realEpisodeRaw);
+            Assert.NotNull(realEpisodeRaw);
         }
     }
 }

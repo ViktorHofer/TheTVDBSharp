@@ -1,14 +1,13 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using TheTVDBSharp.Models;
 using TheTVDBSharp.Services;
 using TheTVDBSharp.Services.Libs;
+using Xunit;
 
 namespace TheTVDBSharp.Tests.Services
 {
-    [TestClass]
     public class SeriesParseServiceTest
     {
         private readonly ISeriesParseService _seriesParseService;
@@ -24,55 +23,55 @@ namespace TheTVDBSharp.Tests.Services
                 episodeParseService); 
         }
 
-        [TestMethod]
-        public async Task Parse_Series_76156_Test()
+        [Fact]
+        public void Parse_Series_76156_Test()
         {
-            var sampleSeriesRaw = await SampleDataHelper.GetTextAsync(SampleDataHelper.SampleData.Series76156);
+            var sampleSeriesRaw = SampleDataHelper.GetText(SampleDataHelper.SampleData.Series76156);
             var series = _seriesParseService.Parse(sampleSeriesRaw);
 
-            Assert.IsNotNull(series);
-            Assert.AreEqual((uint)76156, series.Id);
-            Assert.AreEqual(Frequency.Wednesday, series.AirDay);
-            Assert.AreEqual(194, series.Episodes.Count);
-            Assert.AreEqual(1, series.Genres.Count);
-            Assert.AreEqual(new TimeSpan(20, 0, 0), series.AirTime);
+            Assert.NotNull(series);
+            Assert.Equal((uint)76156, series.Id);
+            Assert.Equal(Frequency.Wednesday, series.AirDay);
+            Assert.Equal(194, series.Episodes.Count);
+            Assert.Equal(1, series.Genres.Count);
+            Assert.Equal(new TimeSpan(20, 0, 0), series.AirTime);
         }
 
-        [TestMethod]
-        public async Task Parse_Search_Scrubs_Test()
+        [Fact]
+        public void Parse_Search_Scrubs_Test()
         {
-            var sampleSeriesCollectionRaw = await SampleDataHelper.GetTextAsync(SampleDataHelper.SampleData.SearchScrubs);
+            var sampleSeriesCollectionRaw = SampleDataHelper.GetText(SampleDataHelper.SampleData.SearchScrubs);
             var seriesCollection = _seriesParseService.ParseSearch(sampleSeriesCollectionRaw);
 
-            Assert.IsNotNull(seriesCollection);
-            Assert.AreEqual(2, seriesCollection.Count);
-            Assert.AreEqual((uint)76156, seriesCollection.First().Id);
-            Assert.AreEqual((uint)167151, seriesCollection.Last().Id);
+            Assert.NotNull(seriesCollection);
+            Assert.Equal(2, seriesCollection.Count);
+            Assert.Equal((uint)76156, seriesCollection.First().Id);
+            Assert.Equal((uint)167151, seriesCollection.Last().Id);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task Parse_FullSeries_76156_Test()
         {
-            var sampleFullSeriesCompressedStream = await SampleDataHelper.GetStreamAsync(SampleDataHelper.SampleData.SeriesFull76156);
+            var sampleFullSeriesCompressedStream = SampleDataHelper.GetStream(SampleDataHelper.SampleData.SeriesFull76156);
             var series = await _seriesParseService.ParseFull(sampleFullSeriesCompressedStream, Language.English);
 
-            Assert.IsNotNull(series);
-            Assert.AreEqual((uint)76156, series.Id);
-            Assert.AreEqual(Frequency.Wednesday, series.AirDay);
-            Assert.AreEqual(194, series.Episodes.Count);
-            Assert.AreEqual(1, series.Genres.Count);
-            Assert.AreEqual(18, series.Actors.Count);
-            Assert.AreEqual(138, series.Banners.Count);
-            Assert.AreEqual(new TimeSpan(20, 0, 0), series.AirTime);
+            Assert.NotNull(series);
+            Assert.Equal((uint)76156, series.Id);
+            Assert.Equal(Frequency.Wednesday, series.AirDay);
+            Assert.Equal(194, series.Episodes.Count);
+            Assert.Equal(1, series.Genres.Count);
+            Assert.Equal(18, series.Actors.Count);
+            Assert.Equal(138, series.Banners.Count);
+            Assert.Equal(new TimeSpan(20, 0, 0), series.AirTime);
         }
 
-        [TestMethod]
-        public async Task Parse_RemoveYearIfInTitle_Test()
+        [Fact]
+        public void Parse_RemoveYearIfInTitle_Test()
         {
-            var sampleSeriesRaw = await SampleDataHelper.GetTextAsync(SampleDataHelper.SampleData.Series76156);
+            var sampleSeriesRaw = SampleDataHelper.GetText(SampleDataHelper.SampleData.Series76156);
             var series = _seriesParseService.Parse(sampleSeriesRaw);
 
-            Assert.AreEqual("Scrubs", series.Title);
+            Assert.Equal("Scrubs", series.Title);
         }
     }
 }

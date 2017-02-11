@@ -1,27 +1,25 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using TheTVDBSharp.Services;
 using TheTVDBSharp.Services.Libs;
+using Xunit;
 
 namespace TheTVDBSharp.Tests.Services
 {
-    [TestClass]
     public class ActorParseServiceTest
     {
         private readonly IActorParseService _actorParseService = new ActorParseService();
 
-        [TestMethod]
-        public async Task Parse_Actors_76156_Test()
+        [Fact]
+        public void Parse_Actors_76156_Test()
         {
-            var actorCollectionRaw = await SampleDataHelper.GetTextAsync(SampleDataHelper.SampleData.SeriesFull76156Actors);
+            var actorCollectionRaw = SampleDataHelper.GetText(SampleDataHelper.SampleData.SeriesFull76156Actors);
             var actors = _actorParseService.Parse(actorCollectionRaw);
 
-            Assert.IsNotNull(actors);
-            Assert.AreEqual(18, actors.Count);
-            Assert.AreEqual((uint)43640, actors.First().Id);
-            Assert.AreEqual("Zach Braff", actors.First().Name);
-            Assert.AreEqual(0, actors.First().SortOrder);
+            Assert.NotNull(actors);
+            Assert.Equal(18, actors.Count);
+            Assert.Equal((uint)43640, actors.First().Id);
+            Assert.Equal("Zach Braff", actors.First().Name);
+            Assert.Equal(0, actors.First().SortOrder);
         }
     }
 }

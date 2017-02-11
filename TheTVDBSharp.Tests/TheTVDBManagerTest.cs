@@ -1,25 +1,24 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Xunit;
 
 namespace TheTVDBSharp.Tests
 {
-    [TestClass]
     public class TheTvdbManagerTest
     {
         private readonly ITheTvdbManager _tvdbManager = GlobalConfiguration.Manager;
 
-        [TestMethod]
+        [Fact]
         public async Task GetFullSeries_Test()
         {
             var series = await _tvdbManager.GetSeries(76156, Models.Language.English);
-            Assert.IsNotNull(series);
+            Assert.NotNull(series);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetUpdates_Test()
         {
             var updateContainer = await _tvdbManager.GetUpdates(Models.Interval.Day);
-            Assert.IsNotNull(updateContainer);
+            Assert.NotNull(updateContainer);
         }
     }
 }
