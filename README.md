@@ -1,9 +1,7 @@
 TheTVDBSharp
 =========
 
-**Nuget Package for NET45,W8x,WP8x: https://www.nuget.org/packages/TheTVDBSharp/**
-
-**Nuget Package for Windows 10 (UAP): https://www.nuget.org/packages/TheTVDBSharp.UAP/1.0.0**
+**Nuget Package: https://www.nuget.org/packages/TheTVDBSharp/**
 
 **A C# wrapper for the TVDB API.**
 
