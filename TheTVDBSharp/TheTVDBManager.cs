@@ -11,7 +11,7 @@ namespace TheTVDBSharp
     /// <summary>
     /// The main class which will handle all user interaction
     /// </summary>
-    public class TheTvdbManager : ITheTvdbManager
+    public class TheTVDBManager : ITheTVDBManager
     {
         private readonly IEpisodeService _episodeService;
         private readonly ISeriesService _seriesService;
@@ -26,7 +26,7 @@ namespace TheTVDBSharp
         /// Creates a new instance with the provided api configuration
         /// </summary>
         /// <param name="apiConfiguration">The API configuration</param>
-        public TheTvdbManager(IApiConfiguration apiConfiguration)
+        public TheTVDBManager(IApiConfiguration apiConfiguration)
         {
             if (apiConfiguration == null)
                 throw new ArgumentNullException(nameof(apiConfiguration));
@@ -52,7 +52,7 @@ namespace TheTVDBSharp
         /// </summary>
         /// <param name="apiKey">The API key provided by TVDB</param>
         /// <param name="baseUrl">The API base url</param>
-        public TheTvdbManager(string apiKey, string baseUrl = "http://thetvdb.com")
+        public TheTVDBManager(string apiKey, string baseUrl = "http://thetvdb.com")
             : this(new ApiConfiguration(apiKey, baseUrl))
         {
         }

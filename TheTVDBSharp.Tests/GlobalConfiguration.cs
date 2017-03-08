@@ -16,7 +16,7 @@ namespace TheTVDBSharp.Tests
             }
         }
 
-        public static ITheTvdbManager Manager
+        public static ITheTVDBManager Manager
         {
             get
             {
@@ -26,7 +26,7 @@ namespace TheTVDBSharp.Tests
                 // If the api key is not valid the server returns a 404 (.... crap ....) so I was not able
                 // to create a unique exception for that case. TheTVDB triggers 404 also in many other cases.
 
-                return new TheTvdbManager(ApiKey);
+                return new TheTVDBManager(ApiKey);
             }
         }
     }

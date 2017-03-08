@@ -5,7 +5,7 @@ using TheTVDBSharp.Models;
 
 namespace TheTVDBSharp
 {
-    public interface ITheTvdbManager
+    public interface ITheTVDBManager
     {
         Task<IReadOnlyCollection<Series>> SearchSeries(string query, Language language);
 

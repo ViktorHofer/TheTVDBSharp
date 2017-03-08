@@ -5,7 +5,7 @@ namespace TheTVDBSharp.Tests
 {
     public class TheTvdbManagerTest
     {
-        private readonly ITheTvdbManager _tvdbManager = GlobalConfiguration.Manager;
+        private readonly ITheTVDBManager _tvdbManager = GlobalConfiguration.Manager;
 
         [Fact]
         public async Task GetFullSeries_Test()
