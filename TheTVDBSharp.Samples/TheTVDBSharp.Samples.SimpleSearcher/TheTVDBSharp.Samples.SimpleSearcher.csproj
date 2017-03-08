@@ -9,6 +9,6 @@
     <ProjectReference Include="..\..\TheTVDBSharp\TheTVDBSharp.csproj" />
   </ItemGroup>
 
-  <Import Project="..\TheTVDBSharp.Samples.Shared\TheTVDBSharp.Samples.Shared.projitems" Label="Shared" />
+  <Import Project="..\..\TheTVDBSharp.Shared\TheTVDBSharp.Shared.projitems" Label="Shared" />
 
 </Project>

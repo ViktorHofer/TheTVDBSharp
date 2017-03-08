@@ -34,10 +34,12 @@
   <ItemGroup>
     <ProjectReference Include="..\TheTVDBSharp\TheTVDBSharp.csproj" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
+
+  <Import Project="..\TheTVDBSharp.Shared\TheTVDBSharp.Shared.projitems" Label="Shared" />
 
   <ItemGroup>
     <None Update="SampleData\SeriesFull76156.zip">

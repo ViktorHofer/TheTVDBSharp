@@ -11,7 +11,7 @@ namespace TheTVDBSharp.Samples.SimpleSearcher
             while (true)
             {
                 Console.Write("Enter a series name: ");
-                var searchQuery = Console.ReadLine();
+                var searchQuery = "scrubs";
 
                 Console.WriteLine();
                 Console.WriteLine("-----------------------------------------");

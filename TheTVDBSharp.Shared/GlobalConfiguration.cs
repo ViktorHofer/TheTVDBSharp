@@ -1,7 +1,7 @@
 ﻿using System;
 using TheTVDBSharp.Models;
 
-namespace TheTVDBSharp.Tests
+namespace TheTVDBSharp
 {
     public static partial class GlobalConfiguration
     {

@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using TheTVDBSharp.Models;
-using TheTVDBSharp.Services.Libs;
 
 namespace TheTVDBSharp.Services
 {

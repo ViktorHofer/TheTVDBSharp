@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TheTVDBSharp.Samples.Serializer.Properties {
-    using System;
-    
-    
+namespace TheTVDBSharp.Samples.Serializer.Properties
+{
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>

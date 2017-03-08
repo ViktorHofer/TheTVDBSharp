@@ -19,7 +19,7 @@ namespace TheTVDBSharp.Tests.Services
             Assert.Equal(141, updateContainer.BannerCollection.Count);
             Assert.Equal(3468, updateContainer.EpisodeCollection.Count);
             Assert.Equal(591, updateContainer.SeriesCollection.Count);
-            Assert.Equal(new DateTime(2014, 9, 9, 17, 30, 1), updateContainer.LastUpdated.Date.ToUniversalTime());
+            Assert.Equal(new DateTime(2014, 9, 8, 22, 0, 0), updateContainer.LastUpdated.Date.ToUniversalTime());
         }
     }
 }

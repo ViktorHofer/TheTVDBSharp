@@ -6,7 +6,7 @@
     <SharedGUID>79bf040c-a4e8-4faa-9553-9cd424fffe7a</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>TheTVDBSharp.Samples</Import_RootNamespace>
+    <Import_RootNamespace>TheTVDBSharp</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)GlobalConfiguration.cs" />
