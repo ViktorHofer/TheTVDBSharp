@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
+    <PackageId>$(AssemblyName)</PackageId>
+    <Authors>Viktor Hofer</Authors>
+    <Description>TheTVDB API access library with support for netstandard 1.4 and above.</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <Copyright>Copyright 2017 (c) Viktor Hofer</Copyright>
+    <PackageTags>TheTVDB, TVDB, SeriesManager, IMDB</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.2.0-rc1</Version>
+    <RepositoryUrl>https://github.com/ViktorHofer/TheTVDBSharp</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
