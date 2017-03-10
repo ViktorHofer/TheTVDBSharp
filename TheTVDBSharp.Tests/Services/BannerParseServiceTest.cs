@@ -21,5 +21,23 @@ namespace TheTVDBSharp.Tests.Services
             Assert.Equal((uint)23585, banners.First().Id);
             Assert.Equal((byte)226, (banners.First() as FanartBanner).Colors.First().G);
         }
+
+        [Fact]
+        public void ParseSize_ValidSize_Success()
+        {
+            var size = BannerParseService.ParseSize("320x760");
+
+            Assert.NotNull(size);
+            Assert.Equal(320, size.Value.width);
+            Assert.Equal(760, size.Value.height);
+        }
+
+        [Fact]
+        public void ParseSize_InvalidSize_Success()
+        {
+            var size = BannerParseService.ParseSize("720-360");
+
+            Assert.Equal(size.HasValue, false);
+        }
     }
 }

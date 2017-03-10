@@ -13,4 +13,8 @@
     <RepositoryUrl>https://github.com/ViktorHofer/TheTVDBSharp</RepositoryUrl>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+  </ItemGroup>
+
 </Project>

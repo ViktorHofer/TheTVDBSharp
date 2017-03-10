@@ -31,14 +31,10 @@ namespace TheTVDBSharp.Services
                 throw new ParseException("Actors collection string cannot be parsed into a xml document.", e);
             }
 
-            // If Actors element is missing return null
-            var actorsXml = doc.Element("Actors");
-            if (actorsXml == null) throw new ParseException("Error while parsing actors xml document. Xml Element 'Actors' is missing.");
-
-            return actorsXml.Elements("Actor")
+            return doc.Element("Actors")?.Elements("Actor")
                 .Select(Parse)
                 .Where(actor => actor != null)
-                .ToList();
+                .ToList() ?? throw new ParseException("Error while parsing actors xml document. Xml Element 'Actors' is missing.");
         }
 
         /// <summary>

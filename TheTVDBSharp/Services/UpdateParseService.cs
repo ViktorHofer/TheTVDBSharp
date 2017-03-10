@@ -44,7 +44,7 @@ namespace TheTVDBSharp.Services
 
             var updateContainer = new UpdateContainer();
 
-            var lastUpdatedRaw = updateContainerXml.Attribute("time").Value;
+            var lastUpdatedRaw = updateContainerXml.Attribute("time")?.Value;
             if (lastUpdatedRaw != null && uint.TryParse(lastUpdatedRaw, out uint lastUpdatedEpoch))
             {
                 updateContainer.LastUpdated = lastUpdatedEpoch.ToDateTime();

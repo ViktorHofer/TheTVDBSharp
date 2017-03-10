@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 using TheTVDBSharp.Common;
 using TheTVDBSharp.Models;
 using TheTVDBSharp.Services.Libs;
-#if WINDOWS_RUNTIME
-using Windows.UI;
-#endif
 
 namespace TheTVDBSharp.Services
 {
@@ -34,14 +32,10 @@ namespace TheTVDBSharp.Services
                 throw new ParseException("Banners collection string cannot be parsed into a xml document.", ex);
             }
 
-            // If Banners element is missing return null
-            var bannersXml = doc.Element("Banners");
-            if (bannersXml == null) throw new ParseException("Error while parsing banners xml document. Xml element 'Banners' is missing.");
-
-            return bannersXml.Elements("Banner")
+            return doc.Element("Banners")?.Elements("Banner")
                 .Select(Parse)
                 .Where(banner => banner != null)
-                .ToList();
+                .ToList() ?? throw new ParseException("Error while parsing banners xml document. Xml element 'Banners' is missing.");
         }
 
         /// <summary>
@@ -95,8 +89,8 @@ namespace TheTVDBSharp.Services
             var size = ParseSize(bannerXml.ElementAsString("BannerType2"));
             if (size != null)
             {
-                banner.Width = size.Item1;
-                banner.Height = size.Item2;
+                banner.Width = size.Value.width;
+                banner.Height = size.Value.height;
             }
 
             var colorRawCollection = bannerXml.ElementAsString("Colors").SplitByPipe();
@@ -131,8 +125,8 @@ namespace TheTVDBSharp.Services
             var size = ParseSize(bannerXml.ElementAsString("BannerType2"));
             if (size == null) return banner;
 
-            banner.Width = size.Item1;
-            banner.Height = size.Item2;
+            banner.Width = size.Value.width;
+            banner.Height = size.Value.height;
 
             return banner;
         }
@@ -158,12 +152,18 @@ namespace TheTVDBSharp.Services
             };
         }
 
-        private static Tuple<int, int> ParseSize(string sizeRaw)
+        public static (int width, int height)? ParseSize(string sizeRaw)
         {
             if (string.IsNullOrWhiteSpace(sizeRaw)) return null;
 
-            var splits = sizeRaw.Split('x');
-            return new Tuple<int, int>(int.Parse(splits[0]), int.Parse(splits[1]));
+            var sizeRegex = new Regex(@"(\d+)x(\d+)");
+            var sizeMatches = sizeRegex.Matches(sizeRaw);
+            if (sizeMatches.Count != 1 || sizeMatches[0].Groups.Count != 3) return null;
+
+            int width = int.Parse(sizeMatches[0].Groups[1].Value);
+            int height = int.Parse(sizeMatches[0].Groups[2].Value);
+
+            return (width, height);
         }
     }
 }
