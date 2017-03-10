@@ -9,10 +9,13 @@
     <PackageReleaseNotes></PackageReleaseNotes>
     <Copyright>Copyright 2017 (c) Viktor Hofer</Copyright>
     <PackageTags>TheTVDB, TVDB, SeriesManager, IMDB</PackageTags>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <RepositoryUrl>https://github.com/ViktorHofer/TheTVDBSharp</RepositoryUrl>
-    <AssemblyVersion>2.0.1.0</AssemblyVersion>
-    <FileVersion>2.0.1.0</FileVersion>
+    <AssemblyVersion>2.0.2.0</AssemblyVersion>
+    <FileVersion>2.0.2.0</FileVersion>
+    <PackageProjectUrl>https://github.com/ViktorHofer/TheTVDBSharp</PackageProjectUrl>
+    <PackageIconUrl>http://thetvdb.com/favicon.ico</PackageIconUrl>
+    <PackageLicenseUrl>https://github.com/ViktorHofer/TheTVDBSharp/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
